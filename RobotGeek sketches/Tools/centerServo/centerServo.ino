@@ -1,6 +1,6 @@
 /***********************************************************************************
  *   ___________
- *  |     __    |           RobotGeek Servo Sentering Tool
+ *  |     __    |           RobotGeek Servo Centering Tool
  *  |   /    \  |
  *  |  |      | |
  *  |   \ __ /  |
@@ -16,7 +16,8 @@
  *    Mutiple servos can be centered at one time, but the number of servos you can attach
  *    may be limited by your power supply. For best performance limit 
  *    testing to one servo at a time. 
- *
+ *    For the centering process, the power jumpers should be set to '5v' if you are powering
+ *    the Geekduino/Arduino from USB. 
  ***********************************************************************************/
 #include <Servo.h>   //include the servo library to control the RobotGeek Servos
 
