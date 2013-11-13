@@ -2,11 +2,11 @@
  *   ___________
  *  |     __    |           RobotGeek Gripper
  *  |   /    \  |                Micro Servo Setup Tool
- *  |  |      | |
- *  |   \ __ /  |
- *  |           |
- *  |           |
- *  |___________|
+ *  |  |      | |   _____
+ *  |   \ __ /  |  |  _  |
+ *  |           |  | |*| |
+ *  |           |  |     |
+ *  |___________|  |_____|
  *
  *  The following sketch will set up the 2 servos for the RobotGeek Gripper
  *  The sketch will send a signal to pin 9 of the Geekduino/Arduino's pins to
@@ -38,10 +38,10 @@ Servo largeServo;   //create an servo object for the RobotGeek 180 degree serco
 
 void setup()
 { 
-  servoToSet.attach(MICRO_SERVOPIN);
-  servoToSet.write(150);    // sets the servo position to 150 degress, positioning the servo for the gripper
-  servoToSet.attach(LARGE_SERVOPIN);
-  servoToSet.write(90);    // sets the servo position to 900 degress, centered
+  microServo.attach(MICRO_SERVOPIN);
+  microServo.write(150);    // sets the servo position to 150 degress, positioning the servo for the gripper
+  largeServo.attach(LARGE_SERVOPIN);
+  largeServo.write(90);    // sets the servo position to 900 degress, centered
 }
  
 void loop()
