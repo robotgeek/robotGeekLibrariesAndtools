@@ -10,7 +10,7 @@
  *     |     |
  *     |_____|
  *
- *  The following sketch will move each servo in the RobotGeek Gripper. It will rpeat the following cycle
+ *  The following sketch will move each servo in the RobotGeek Gripper. It will repeat the following cycle
  * 
  *  1)Open gripper, wait 3 seconds
  *  2)Close Gripper, wait 3 seconds
