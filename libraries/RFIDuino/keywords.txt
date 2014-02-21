@@ -1,0 +1,7 @@
+
+RFIDuino	KEYWORD1
+decodeTag	KEYWORD2
+errorSound	KEYWORD2
+successSound	KEYWORD2
+transferToBuffer	KEYWORD2
+compareTagData	KEYWORD2
