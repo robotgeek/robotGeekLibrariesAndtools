@@ -1,5 +1,5 @@
 /*
-  ArmControl.cpp - Library for interfacing with ArbotiX based Robotic Arms.
+  ArmLink.cpp - Library for interfacing with ArbotiX based Robotic Arms.
   Based on Commander Libraries written by:
   Copyright (c) 2009-2012 Michael E. Ferguson.  All right reserved.
   Copyright (c) 2013 Trossen Robotics. All right reserved.
@@ -20,21 +20,22 @@
 */
 
 #include <Arduino.h>
-#include "ArmControl.h"
+#include "ArmLink.h"
 
 /* Constructor */
-ArmControl::ArmControl(){
+ArmLink::ArmLink(){
     index = -1;
     status = 0;
 }
-void ArmControl::begin(int baud){
+
+void ArmLink::begin(int baud){
     Serial.begin(baud);
 }
 
 
-/* process messages coming from ArmControl 
+/* process messages coming from ArmLink 
  *  format = 0xFF Xaxis Yaxis Zaxis W_angle W_rot Gripper BUTTONS EXT CHECKSUM */
-int ArmControl::ReadMsgs(){
+int ArmLink::ReadMsgs(){
     while(Serial.available() > 0){
         if(index == -1){         // looking for new packet
             if(Serial.read() == 0xff){
@@ -57,10 +58,10 @@ int ArmControl::ReadMsgs(){
                     index = -1;
                     return 0;
                 }else{
-                    Xaxis = ((vals[0]<<8) + vals[1])-512;
+                    Xaxis = ((vals[0]<<8) + vals[1]);
                     Yaxis = (vals[2]<<8) + vals[3];
 					Zaxis = (vals[4]<<8) + vals[5];
-					W_ang = ((vals[6]<<8) + vals[7])-90;
+					W_ang = ((vals[6]<<8) + vals[7]);
 					W_rot = (vals[8]<<8) + vals[9];
 					Grip = (vals[10]<<8) + vals[11];
 					dtime = vals[12];
