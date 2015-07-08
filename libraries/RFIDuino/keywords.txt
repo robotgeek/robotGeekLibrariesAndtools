@@ -5,3 +5,4 @@ errorSound	KEYWORD2
 successSound	KEYWORD2
 transferToBuffer	KEYWORD2
 compareTagData	KEYWORD2
+scanForTag		KEYWORD2
