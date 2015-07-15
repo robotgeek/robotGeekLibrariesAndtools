@@ -10,7 +10,7 @@
 #include <Wire.h>
 
 RobotGeekLCD lcd;
-RFIDuino myrfid;  
+RFIDuino myrfid(1.2);  
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 ServoEx myservo; 
 
