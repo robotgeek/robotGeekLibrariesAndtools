@@ -18,7 +18,7 @@
 *
 ****************************************************************************************************/
 #include "Arduino.h"
-#include "rfiduino.h"
+#include "RFIDuino.h"
 
 
 //initialize the RFIDuino object and set the pins correctlly based on hardware version
