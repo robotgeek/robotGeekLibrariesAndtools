@@ -39,16 +39,20 @@
 #include <Servo.h>   //include the servo library to control the RobotGeek Servos
 
 #define WRIST_SERVO_PIN 9  //pin that the wrist servo will be attached to
-#define GRIPPER_SERVO_PIN 10  //pin that the gripper 9g servo will be attached to
+#define GRIPPER_SERVO_PIN_9g 11  //pin that the gripper 9g servo will be attached to
+#define GRIPPER_SERVO_PIN_PARALLEL 10  //pin that the gripper 9g servo will be attached to
 
 //also send data to pins 3, 5, and 6 for convieice when building the snapper arm
 #define BASE_SERVO_PIN 3  //pin that the large servo will be attached to
 #define SHOULDER_SERVO_PIN 5  //pin that the large servo will be attached to
 #define ELBOW_SERVO_PIN 6  //pin that the large servo will be attached to
 
+
+
 //gripper and wrist servos
 Servo wristServo;
-Servo gripperServo;   //create an servo object for the 9g FT-FS90MG micro servo
+Servo gripperServo9g;   //create an servo object for the 9g FT-FS90MG micro servo
+Servo gripperServoParallel;   //create an servo object for the robotgeek parallel gripper
 
 //arm servos
 Servo baseServo;
@@ -57,18 +61,46 @@ Servo elbowServo;
 
 void setup()
 { 
-  //attach and set gripper and wrist servos	
-  gripperServo.attach(GRIPPER_SERVO_PIN);
-  gripperServo.write(150);    // sets the servo position to 150 degress, positioning the servo for the gripper
-  wristServo.attach(WRIST_SERVO_PIN);
-  wristServo.write(90);    // sets the servo position to 90 degress, centered
+  
 
-  //attach and set arm servos
+  
+  
+  
+  
+  
+  //attach servos	
+  gripperServo9g.attach(GRIPPER_SERVO_PIN_9g);
+  gripperServoParallel.attach(GRIPPER_SERVO_PIN_PARALLEL);
+  wristServo.attach(WRIST_SERVO_PIN); 
   baseServo.attach(BASE_SERVO_PIN);
-  baseServo.write(90);    // sets the servo position to 90 degress, centered
   shoulderServo.attach(SHOULDER_SERVO_PIN);
-  shoulderServo.write(90);    // sets the servo position to 90 degress, centered
   elbowServo.attach(ELBOW_SERVO_PIN);
+  
+  
+ 
+  gripperServo9g.write(45);    // sets the servo position to 150 degress, positioning the servo for the 9g gripper
+  gripperServoParallel.write(45);    // sets the servo position to 90 degress, positioning the servo for the parallel gripper
+  wristServo.write(45);    // sets the servo position to 90 degress, centered
+  baseServo.write(45);    // sets the servo position to 90 degress, centered
+  shoulderServo.write(45);    // sets the servo position to 90 degress, centered
+  elbowServo.write(45);    // sets the servo position to 90 degress, centered
+  
+  
+ 
+  gripperServo9g.write(125);    // sets the servo position to 150 degress, positioning the servo for the 9g gripper
+  gripperServoParallel.write(125);    // sets the servo position to 90 degress, positioning the servo for the parallel gripper
+  wristServo.write(125);    // sets the servo position to 90 degress, centered
+  baseServo.write(125);    // sets the servo position to 90 degress, centered
+  shoulderServo.write(125);    // sets the servo position to 90 degress, centered
+  elbowServo.write(125);    // sets the servo position to 90 degress, centered
+  
+  
+ 
+  gripperServo9g.write(150);    // sets the servo position to 150 degress, positioning the servo for the 9g gripper
+  gripperServoParallel.write(90);    // sets the servo position to 90 degress, positioning the servo for the parallel gripper
+  wristServo.write(90);    // sets the servo position to 90 degress, centered
+  baseServo.write(90);    // sets the servo position to 90 degress, centered
+  shoulderServo.write(90);    // sets the servo position to 90 degress, centered
   elbowServo.write(90);    // sets the servo position to 90 degress, centered
 }
  

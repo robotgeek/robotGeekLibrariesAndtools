@@ -8,8 +8,7 @@
  *  The following sketch will test the snapper arm by sequentially moving each 
  *  joint of the arm .
  *
- *  http://learn.trossenrobotics.com/33-robotgeek-getting-started-guides/robotgeek-snapper-robot-arm/63-robotgeek-snapper-arm-getting-started-guide
- *
+ *  http://learn.robotgeek.com/getting-started/33-robotgeek-snapper-robot-arm/63-robotgeek-snapper-arm-getting-started-guide.html
  *
  *  WIRING
  *    Servos
@@ -17,7 +16,7 @@
  *      Digital I/O 5 - Shoulder Joint - Robot Geek Servo 
  *      Digital I/O 6 - Elbow Joint - Robot Geek Servo 
  *      Digital I/O 9 - Wrist Joint - Robot Geek Servo 
- *      Digital I/O 10 - Gripper Servo - 9g Servo 
+ *      Digital I/O 10 - Gripper Servo - 9g Servo or RobotGeek Servo 
  *
  *    Analog Inputs
  *      Analog inputs will be ignored for this test sketch
@@ -51,8 +50,6 @@
  *  NOTES
  *    This test code has specific limits for testing the snapper arm. It is
  *    NOT reccomended that this code be used as a basis for any other code.    
- *    Instead, use the Analog control code, found here: 
- *    https://github.com/trossenrobotics/RobotGeekArmAnalog/archive/master.zip
  *
  *
  *  This code is a Work In Progress and is distributed in the hope that it will be useful,
@@ -60,6 +57,21 @@
  *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
  ***********************************************************************************/
 #include <Servo.h>
+
+#define ROBOT_GEEK_9G_GRIPPER 1
+#define ROBOT_GEEK_PARALLEL_GRIPPER 2
+
+//The 9G gripper is the gripper with the small blue 9g servo
+//The Parralle gripper has a full robotgeek servo and paralle rails
+//Uncomment one of the following lines depending on which gripper you are using.
+//#define GRIPPER_TYPE ROBOT_GEEK_9G_GRIPPER
+//#define GRIPPER_TYPE ROBOT_GEEK_PARALLEL_GRIPPER
+
+#ifndef GRIPPER_TYPE
+   #error YOU HAVE TO SELECT THE GRIPPER YOU ARE USING! Uncomment the correct line above for your gripper
+#endif
+
+#define DELAY_TIME 2 //milliseconds to wait between
 
 //define analog pins that will be connected to the joystick pins
 #define BASE     0  //connected to Rotation Knob / Potentiometer # 1
@@ -77,8 +89,16 @@
 #define ELBOW_MAX     2400
 #define WRIST_MIN     600
 #define WRIST_MAX     2400 
-#define GRIPPER_MIN   900    //full counterclockwise for 9g servo
-#define GRIPPER_MAX   2100   //full clockwise for 9g servo
+
+//mins and maxes depending on gripper type
+#if GRIPPER_TYPE == ROBOT_GEEK_9G_GRIPPER
+  #define GRIPPER_MIN   900    //full counterclockwise for 9g servo
+  #define GRIPPER_MAX   2100   //full clockwise for 9g servo
+#elif GRIPPER_TYPE == ROBOT_GEEK_PARALLEL_GRIPPER
+  #define GRIPPER_MIN   750    //fully closed
+  #define GRIPPER_MAX   2400   //fully open
+#endif
+
 #define CENTERED      1500
 
 //generic deadband limits - not all joystics will center at 512, so these limits remove 'drift' from joysticks that are off-center.
@@ -135,46 +155,49 @@ void setup()
   delay(2000);  //wait 1 second
   
   set_servo();  // Move servos to defualt positions
+  
+  
+ testServo( BAS_SERVO, BASE_MIN,BASE_MAX);
+ testServo( SHL_SERVO, SHOULDER_MIN,SHOULDER_MAX);
+ testServo( ELB_SERVO, ELBOW_MIN,ELBOW_MAX);
+ testServo( WRI_SERVO, WRIST_MIN,WRIST_MAX);
+ testServo( GRI_SERVO, GRIPPER_MIN,GRIPPER_MAX);
+  
+  
 }
 
 void loop() 
 {
   
-  BAS_SERVO.writeMicroseconds(BASE_MIN);
-  delay(1000);
-  BAS_SERVO.writeMicroseconds(BASE_MAX);
-  delay(1000);
-  BAS_SERVO.writeMicroseconds(CENTERED);
-  delay(1000);
   
-  SHL_SERVO.writeMicroseconds(SHOULDER_MIN);
-  delay(1000);
-  SHL_SERVO.writeMicroseconds(SHOULDER_MAX);
-  delay(1000);
-  SHL_SERVO.writeMicroseconds(CENTERED);
-  delay(1000);
+  
+}
 
-  ELB_SERVO.writeMicroseconds(ELBOW_MIN);
-  delay(1000);
-  ELB_SERVO.writeMicroseconds(ELBOW_MAX);
-  delay(1000); 
-  ELB_SERVO.writeMicroseconds(CENTERED);
-  delay(1000); 
+
+  void testServo(Servo servo, int minServoPosistion, int maxServoPosition)
+  {
+      for(int i = CENTERED; i > minServoPosistion; i= i - 1 )
+    {
+        servo.writeMicroseconds(i);
+        delay(DELAY_TIME);
   
-  WRI_SERVO.writeMicroseconds(WRIST_MIN);
-  delay(1000);  
-  WRI_SERVO.writeMicroseconds(WRIST_MAX);
-  delay(1000);
-  WRI_SERVO.writeMicroseconds(CENTERED);
-  delay(1000);
+    }
+    
+    for(int i = minServoPosistion; i < maxServoPosition; i= i + 1 )
+    {
+        servo.writeMicroseconds(i);
+        delay(DELAY_TIME);
   
-  GRI_SERVO.writeMicroseconds(GRIPPER_MIN);
-  delay(1000); 
-  GRI_SERVO.writeMicroseconds(GRIPPER_MAX);
-  delay(1000);
-  GRI_SERVO.writeMicroseconds(CENTERED);
-  delay(1000);
+    }
+    
+    for(int i = maxServoPosition; i > CENTERED; i= i - 1 )
+    {
+        servo.writeMicroseconds(i);
+        delay(DELAY_TIME);
   
+    }
+  
+    
   }
 
 

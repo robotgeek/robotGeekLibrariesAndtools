@@ -8,9 +8,10 @@
  *  |           |
  *  |___________|
  *
- *  The following sketch send a signal to all 6 of the Geekduino/Arduino's pins to
- *  that sets any attached servo to 90 degrees, centering the servo.
- *    
+ *  The following sketch will move any servo attached i pins 3,5,6,9,10 or 11
+ *  First the servos will move to 0 degrees, then to 180 degrees, then they will
+ *   move (and stay) at 90 degrees, their centered position.
+ * 
  *  Wiring
  *    A servo can be connected to any of the PWM ports: 3,5,6,9,10 or 11
  *    Mutiple servos can be centered at one time, but the number of servos you can attach
@@ -27,6 +28,21 @@ int servoPins[] = {3,5,6,9,10,11};  //create an array of 6 ints holding the pin 
  
 void setup()
 { 
+    //iterate from 0->6. For each pin attach the servo and set it to 0 degrees
+  for(int i = 0; i < 6; i++)
+  {
+    servoToCenter[i].attach(servoPins[i]);    //attach pan servo object on pin i
+    servoToCenter[i].write(0);               // sets the servo position to 0 degress, the center of the servo. This will also serve as 'stopped' for continous rotation servos
+  }
+  delay(1000);
+    //iterate from 0->6. For each pin attach the servo and set it to 180 degrees
+  for(int i = 0; i < 6; i++)
+  {
+    servoToCenter[i].attach(servoPins[i]);    //attach pan servo object on pin i
+    servoToCenter[i].write(180);               // sets the servo position to 180 degress, the center of the servo. This will also serve as 'stopped' for continous rotation servos
+  }
+  delay(1000);
+  
   //iterate from 0->6. For each pin attach the servo and set it to 90 degrees
   for(int i = 0; i < 6; i++)
   {
