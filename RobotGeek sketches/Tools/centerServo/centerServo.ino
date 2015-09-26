@@ -21,6 +21,9 @@
  *    the Geekduino/Arduino from USB. 
  ***********************************************************************************/
 #include <Servo.h>   //include the servo library to control the RobotGeek Servos
+#define MAX_PULSE  1750
+#define MIN_PULSE  1250
+#define CENTER_PULSE 1500
 
 Servo servoToCenter[6];   //create an array of servos with 6 elements, one for each PWM pin
 
@@ -32,14 +35,14 @@ void setup()
   for(int i = 0; i < 6; i++)
   {
     servoToCenter[i].attach(servoPins[i]);    //attach pan servo object on pin i
-    servoToCenter[i].write(0);               // sets the servo position to 0 degress, the center of the servo. This will also serve as 'stopped' for continous rotation servos
+    servoToCenter[i].writeMicroseconds(MIN_PULSE);               // sets the servo position to 0 degress, the center of the servo. This will also serve as 'stopped' for continous rotation servos
   }
   delay(1000);
     //iterate from 0->6. For each pin attach the servo and set it to 180 degrees
   for(int i = 0; i < 6; i++)
   {
     servoToCenter[i].attach(servoPins[i]);    //attach pan servo object on pin i
-    servoToCenter[i].write(180);               // sets the servo position to 180 degress, the center of the servo. This will also serve as 'stopped' for continous rotation servos
+    servoToCenter[i].writeMicroseconds(MAX_PULSE);               // sets the servo position to 180 degress, the center of the servo. This will also serve as 'stopped' for continous rotation servos
   }
   delay(1000);
   
@@ -47,7 +50,7 @@ void setup()
   for(int i = 0; i < 6; i++)
   {
     servoToCenter[i].attach(servoPins[i]);    //attach pan servo object on pin i
-    servoToCenter[i].write(90);               // sets the servo position to 90 degress, the center of the servo. This will also serve as 'stopped' for continous rotation servos
+    servoToCenter[i].writeMicroseconds(CENTER_PULSE);               // sets the servo position to 90 degress, the center of the servo. This will also serve as 'stopped' for continous rotation servos
   }
 }
  

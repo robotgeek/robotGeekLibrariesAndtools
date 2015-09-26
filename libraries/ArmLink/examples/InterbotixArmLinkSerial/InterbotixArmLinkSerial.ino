@@ -1,4 +1,4 @@
-//=============================================================================
+//=============================1================================================
 // Based upon Kurt's PX Reactor arm code.
 // https://github.com/KurtE
 // This code provides serial control of the Interbotix line of robotic arms, which are sold by Trossen
@@ -53,10 +53,19 @@
 // Define Options
 //=============================================================================
 
-#define NOPE
-//#define PINCHER
-//#define REACTOR
-//#define WIDOWX
+#define PINCHER 1
+#define REACTOR 2
+#define WIDOWX 3
+
+//#define ARMTYPE PINCHER
+//#define ARMTYPE REACTOR
+//#define ARMTYPE WIDOWX
+
+#if !defined(ARMTYPE) 
+   #error YOU HAVE TO SELECT THE ARM YOU ARE USING! Uncomment the correct line above for your arm
+#endif
+
+
 
 
 #define SOUND_PIN    7      // Tell system we have added speaker to IO pin 1

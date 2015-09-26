@@ -84,8 +84,7 @@ void setup()
   baseServo.write(45);    // sets the servo position to 90 degress, centered
   shoulderServo.write(45);    // sets the servo position to 90 degress, centered
   elbowServo.write(45);    // sets the servo position to 90 degress, centered
-  
-  
+  delay(1000);
  
   gripperServo9g.write(125);    // sets the servo position to 150 degress, positioning the servo for the 9g gripper
   gripperServoParallel.write(125);    // sets the servo position to 90 degress, positioning the servo for the parallel gripper
@@ -93,9 +92,8 @@ void setup()
   baseServo.write(125);    // sets the servo position to 90 degress, centered
   shoulderServo.write(125);    // sets the servo position to 90 degress, centered
   elbowServo.write(125);    // sets the servo position to 90 degress, centered
+  delay(1000);
   
-  
- 
   gripperServo9g.write(150);    // sets the servo position to 150 degress, positioning the servo for the 9g gripper
   gripperServoParallel.write(90);    // sets the servo position to 90 degress, positioning the servo for the parallel gripper
   wristServo.write(90);    // sets the servo position to 90 degress, centered

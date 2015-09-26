@@ -16,10 +16,15 @@ extern void ReportAnalog(unsigned char, unsigned int);
 // Check EXT packet to determine action
 //===================================================================================================
    void ExtArmState(){
-       if(armlink.ext < 0x10){
-        // no action
+       
+     
+      g_fArmActive = false;  //start with g_fArmActive being false, so that only movement commands will activate the arm movement in the main loop
+        
+     if(armlink.ext  == 0){
+        // no special action, '0' indicates that a movement command has come through
         g_fArmActive = true;
      }
+      
       
       else if(armlink.ext == 0x11){  //96
         EmergencyStop();
@@ -332,6 +337,7 @@ void IDPacket()  {
   Serial.write((unsigned char) g_bIKMode);
   Serial.write((unsigned char) 0);
   Serial.write((unsigned char)(255 - (ARMID+g_bIKMode+0)%256));
+  
 }
 
 
