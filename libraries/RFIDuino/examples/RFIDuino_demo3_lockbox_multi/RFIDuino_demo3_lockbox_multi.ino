@@ -84,7 +84,7 @@ void loop()
   {
     verifyKey = false;  //set verfiy key to false incase previous ones have made it true
     
-    i = 0;
+    i = 0; //reset tag counter
     
     while(i<NUMBER_OF_CARDS && verifyKey == false)
     {
