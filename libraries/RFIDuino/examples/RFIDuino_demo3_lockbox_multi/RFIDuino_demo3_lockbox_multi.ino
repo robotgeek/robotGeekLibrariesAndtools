@@ -83,6 +83,9 @@ void loop()
   if(myRFIDuino.scanForTag(tagData) == true)
   {
     verifyKey = false;  //set verfiy key to false incase previous ones have made it true
+    
+    i = 0;
+    
     while(i<NUMBER_OF_CARDS && verifyKey == false)
     {
       verifyKey = myRFIDuino.compareTagData(tagData, keyTag[i]);//run the comparetagData to check the tag just read against the 'key' tag we defined.
