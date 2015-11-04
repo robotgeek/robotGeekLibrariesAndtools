@@ -2,7 +2,7 @@
  * RFIDuino Windows Unlock
  *
  * This demo uses the RFIDuino sheild, a Geekduino (or other Arduino Board)
- * to send an RFID to a Windows Vista/7/8 PC. See the link below for 
+ * to send an RFID to a Windows Vista/7/8/10 PC. See the link below for 
  * windows software and instructions.
  *
  * Links
@@ -41,17 +41,33 @@
 * Version 1.1 has a 4-pin antenna port and no version marking
 * Version 1.2 has a 2-pin antenna port and is marked 'Rev 1.2'
 *****************/
-RFIDuino myRFIDuino(1.1);     //initialize an RFIDuino object for hardware version 1.1
-//RFIDuino myRFIDuino(1.2);   //initialize an RFIDuino object for hardware version 1.2
+//RFIDuino myRFIDuino(1.1);     //initialize an RFIDuino object for hardware version 1.1
+RFIDuino myRFIDuino(1.2);   //initialize an RFIDuino object for hardware version 1.2
 
 byte tagData[5]; //Holds the ID numbers from the tag  
+
+int melody[] = {
+  666, 1444, 666}; //holds notes to be played on tone
+int noteDurations[] = {
+  4, 8, 8 }; //holds duration of notes: 4 = quarter note, 8 = eighth note, etc.
 
 void setup()
 {
   //begin serial communicatons at 9600 baud and print a startup message
   SERIAL_PORT.begin(9600);
   SERIAL_PORT.print(">");
-
+  
+  //Comment out to turn off Debug Mode Buzzer START
+  for (int thisNote = 0; thisNote < 3; thisNote++)
+  {
+    int noteDuration = 1000/noteDurations[thisNote];
+    tone(5, melody[thisNote],noteDuration);
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    noTone(5);
+  }
+  //Comment out to turn off Debug Mode Buzzer END
+  
   //The RFIDUINO hardware pins and user outputs(Buzzer / LEDS) are all initialized via pinMode() in the library initialization, so you don not need to to that manually
 }
 
