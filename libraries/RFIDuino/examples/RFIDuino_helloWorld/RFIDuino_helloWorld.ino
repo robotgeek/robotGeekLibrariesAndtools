@@ -43,8 +43,8 @@
 * Version 1.1 has a 4-pin antenna port and no version marking
 * Version 1.2 has a 2-pin antenna port and is marked 'Rev 1.2'
 *****************/
-RFIDuino myRFIDuino(1.1);     //initialize an RFIDuino object for hardware version 1.1
-//RFIDuino myRFIDuino(1.2);   //initialize an RFIDuino object for hardware version 1.2
+//RFIDuino myRFIDuino(1.1);     //initialize an RFIDuino object for hardware version 1.1
+RFIDuino myRFIDuino(1.2);   //initialize an RFIDuino object for hardware version 1.2
 
 byte tagData[5]; //Holds the ID numbers from the tag  
 
