@@ -6,10 +6,9 @@
  *  This code will turn digital pin 13 on and off at a fixed rate. This code will also 
  *  use variables to hold the  pin number and the delay time. 
  *  This code is different from the standard blink code beccause it does not use the
- *  delay() function. By not using the delay function, Because the delay function is not
- *  used, this code is considered non-blocking and other functions can run while mainting 
- *  the blinking. However if extra code executes slower than the desired blink rate, the
- *  actual blink rate may vary
+ *  delay() function. Because the delay function is not used, this code is considered 
+ *  non-blocking and other functions can run while mainting the blinking. However if 
+ *  extra code executes slower than the desired blink rate, the actual blink rate may vary
  *    
  *  This code can blink without the delay function by using the millis() function. The   
  *  millis() function keep track of the number of milliseconds since the program started
@@ -18,7 +17,7 @@
  *  
  *  This technique can be used for many different functions - for example you would use
  *  this technique to print serial debug statements at a fixed rate or update a motor
- *  without blovking the code or overstautring the bus.
+ *  without blovking the code or over-saturating the bus.
  *  
  *    
  * For a more in depth explanation of wiring,  this code and more information on using 
@@ -55,7 +54,7 @@ void loop()
 {
   //the millis() function returns the number of milliseconds since the program started. This if statement checks of the difference between the current time 
   //(millis()) and the last time the LED was changed (previousBlinkTie) is greater than BLINK_TIME - if the diffference is grater, then enough time has passsed between now and the last toggle time, and it is time to toggle again
-  if(millis() - previousBlinkTime > BLINK_TIME )
+  if(millis() - previousBlinkTime >= BLINK_TIME )
   {
     ledState = !ledState; //invert the LED state, toggling it from its previous value
     digitalWrite(DIGITAL_OUT_PIN, ledState);  //write the new state to the pin
