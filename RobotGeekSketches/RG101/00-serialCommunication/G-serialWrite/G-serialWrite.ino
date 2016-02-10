@@ -1,60 +1,49 @@
 /*****************************************************************************************
  *    RG 101 - Serial Communication     ______
- *    Serial Print Variables           | >_   |   
+ *    Serial Write                     | >_   |   
  *                                     |      |   
  *                                     |______|   
  *                                                 
  *                              
- *  This code will use the Geekduino's Hardware Serial Port to send a message out to
- *  a computer (or any other device connected to the serial port)
+ *  This code uses the Serial.write() function to send individual bytes on the serial port.
+ *  This allows you to send shorter messages
  *    
+ *  http://learn.robotgeek.com/getting-started/250-ascii.html
  * For a more in depth explanation of wiring,  this code and more information on using 
  * serial communication and Arduino check out ourserial communication tutorial
  * http://learn.robotgeek.com/robotgeek-101-1/245-robotgeek-101-serial-communication.html
  *  
  * Important Functions
  *  Serial.begin()
- *  Serial.println()
+ *  Serial.write()
  *****************************************************************************************/
 
 //setup runs once when the Geekduino/Arduino is turned on
 void setup()
 {
   
-  int a; //integer a, automatically set to 0
-  int b = 3; //integer b, manually set to 3
-  int c; //intever c, automatically set to 0
-  
   Serial.begin(9600);
-  Serial.print("Print Variable Values: ");
-  Serial.print("a = ");
-  Serial.print(a);
-  Serial.print(" b = ");
-  Serial.print(b);
-  Serial.print(" c = ");
-  Serial.println(c);
+  Serial.write('M');
+  Serial.write('e');
+  Serial.write('s');
+  Serial.write('s');
+  Serial.write('a');
+  Serial.write('g');
+  Serial.write('e');
+  Serial.write('1');
+  Serial.write('2');
+  Serial.write('3');
+  Serial.write(1);
+  Serial.write(2);
+  Serial.write(3);
+  Serial.write('.');
   
+  delay(1000);
   
-  Serial.println("Setting 'a' to '2' ");
-  a = 2; //set variable a to 2
-  Serial.print("Print # 2: ");
-  Serial.print("a = ");
-  Serial.print(a);
-  Serial.print(" b = ");
-  Serial.print(b);
-  Serial.print(" c = ");
-  Serial.println(c);
-  
-  
-  Serial.println("Adding 'a' and 'b' ");
-  c = a + b;
-  Serial.print("Print # 3: ");
-  Serial.print("a = ");
-  Serial.print(a);
-  Serial.print(" b = ");
-  Serial.print(b);
-  Serial.print(" c = ");
-  Serial.println(c);
+  for(int i=32; i<128; i++)
+  {
+    Serial.write(i);
+  }
   
 } //setup() is done, go to loop()
 

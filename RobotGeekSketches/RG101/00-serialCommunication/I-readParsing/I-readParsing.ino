@@ -1,12 +1,12 @@
 /*****************************************************************************************
  *    RG 101 - Serial Communication     ______
- *    Serial Print Loop                | >_   |   
+ *    Serial Print Variables           | >_   |   
  *                                     |      |   
  *                                     |______|   
  *                                                 
  *                              
- *  This code will keep track of the current loop being run and print out the loop number
- *  on the Geekduino's serial port.
+ *  This code will use Arduino's serial functions to easily parse integers and floats
+ *  from a standard serial input.
  *    
  * For a more in depth explanation of wiring,  this code and more information on using 
  * serial communication and Arduino check out ourserial communication tutorial
@@ -15,26 +15,46 @@
  * Important Functions
  *  Serial.begin()
  *  Serial.println()
+ *  Serial.parseInt()
+ *  Serial.parseFloat()
  *****************************************************************************************/
 
 //setup runs once when the Geekduino/Arduino is turned on
-
-int count = 0;                    //number of loops that have been run
-
 void setup()
 {
-  Serial.begin(9600);               //start the Serial port at a baud rate of 9600 bits per second (bps)
-  Serial.println("Loop Counting");  //print a header one time
+  int inputInt;
+  float inputFloat;
+  
+  Serial.begin(9600);
+  Serial.println("Enter a number between -32768 and 32767");
+
+  while(Serial.available() <= 0)
+  {
+     //wait for serial data
+  }
+
+  inputInt = Serial.parseInt();
+  
+  Serial.println("Enter a floating point number (i.e. 3.14)");
+
+  while(Serial.available() <= 0)
+  {
+     //wait for serial data
+  }
+
+  inputFloat = Serial.parseFloat();
+
+  Serial.print("You entered an integer: ");
+  Serial.print(inputInt);
+  Serial.print(" and a floating point: ");
+  Serial.println(inputFloat);
+  
 } //setup() is done, go to loop()
 
 //loop runs forever once setup is complete
 void loop()
 {
-  count = count + 1;          //increase the loop count by one.
-  Serial.print("Loop # ");    //print the first part of the line
-  Serial.println(count);      //print the value of 'count' and a line ending (println) to show the current loop
-  delay(1000);                //wait for 1000ms so that we don't fill up the serial monitor too quickly.
-  
+  //Do nothing    
 }//go back to the first line in loop()
 
 

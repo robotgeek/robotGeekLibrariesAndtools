@@ -1,12 +1,11 @@
 /*****************************************************************************************
  *    RG 101 - Serial Communication     ______
- *    Serial Print Variables           | >_   |   
+ *    Serial Formatting                | >_   |   
  *                                     |      |   
  *                                     |______|   
  *                                                 
  *                              
- *  This code will use the Geekduino's Hardware Serial Port to send a message out to
- *  a computer (or any other device connected to the serial port)
+ *  This code displays data to the serial monitor in a variety of formats
  *    
  * For a more in depth explanation of wiring,  this code and more information on using 
  * serial communication and Arduino check out ourserial communication tutorial
