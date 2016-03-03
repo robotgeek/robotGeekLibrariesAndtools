@@ -1,12 +1,12 @@
 /*****************************************************************************************
  *    RG 101 - Serial Communication     ______
- *    Serial Print Variables           | >_   |   
+ *    Parse serial input               | >_   |   
  *                                     |      |   
  *                                     |______|   
  *                                                 
  *                              
  *  This code will use Arduino's serial functions to easily parse integers and floats
- *  from a standard serial input.
+ *  from a standard serial input. Using these functions may take additional processing time
  *    
  * For a more in depth explanation of wiring,  this code and more information on using 
  * serial communication and Arduino check out ourserial communication tutorial

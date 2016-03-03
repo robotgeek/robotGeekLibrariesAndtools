@@ -14,6 +14,7 @@
  *  
  * Important Functions
  *  Serial.begin()
+ *  Serial.print()
  *  Serial.println()
  *****************************************************************************************/
 

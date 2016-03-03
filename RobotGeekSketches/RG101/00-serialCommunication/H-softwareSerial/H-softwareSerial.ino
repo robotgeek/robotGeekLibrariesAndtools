@@ -11,17 +11,24 @@
  *  
  *  Software serial is not as reliable as hardware serial, and should be used
  *  sparingly and at lower speeds. 
+ *  
  *    
  * For a more in depth explanation of wiring,  this code and more information on using 
  * serial communication and Arduino check out ourserial communication tutorial
  * http://learn.robotgeek.com/robotgeek-101-1/245-robotgeek-101-serial-communication.html
  *  
  * Important Functions
+ *  swSerial()
  *  Serial.begin()
  *  Serial.println()
  *  Serial.available()
  *  Serial.read()
  *  Serial.write()
+ *  swSerial.begin()
+ *  swSerial.println()
+ *  swSerial.available()
+ *  swSerial.read()
+ *  swSerial.write()
  *****************************************************************************************/
 
 #include <SoftwareSerial.h>

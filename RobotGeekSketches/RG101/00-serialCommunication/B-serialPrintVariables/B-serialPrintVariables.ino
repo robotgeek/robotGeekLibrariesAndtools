@@ -15,6 +15,7 @@
  *  
  * Important Functions
  *  Serial.begin()
+ *  Serial.print()
  *  Serial.println()
  *****************************************************************************************/
 
@@ -22,12 +23,13 @@
 void setup()
 {
   
-  int a;      //integer a, automatically set to 0
+  int a = 0;  //integer a, manually set to 0
   int b = 3;  //integer b, manually set to 3
-  int c = 0;  //intever c, manually set to 0
+  int c ;     //intever c, automatically set to 0
   
   Serial.begin(9600);                         //start the hardware serial port at a baudrate of 9600 bits per second(bps)
   
+  Serial.println("   ");                      //print empty line
   Serial.println("Print Variable Values: ");  //print static text
   Serial.println("   ");                      //print empty line
   Serial.println("Initial Values: ");         //print static text

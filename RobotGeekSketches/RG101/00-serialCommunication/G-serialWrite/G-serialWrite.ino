@@ -6,12 +6,16 @@
  *                                                 
  *                              
  *  This code uses the Serial.write() function to send individual bytes on the serial port.
- *  This allows you to send shorter messages
+ *  Serial.write() is often used when the Geekduino is going to communicate with another
+ *  microcontroller or directly to a computer. By sending values as individual bytes, it 
+ *  is possible to send numeric data in much smaller packets, making the communications
+ *  much more efficient. 
  *    
- *  http://learn.robotgeek.com/getting-started/250-ascii.html
+ *
  * For a more in depth explanation of wiring,  this code and more information on using 
  * serial communication and Arduino check out ourserial communication tutorial
  * http://learn.robotgeek.com/robotgeek-101-1/245-robotgeek-101-serial-communication.html
+ * http://learn.robotgeek.com/getting-started/250-ascii.html
  *  
  * Important Functions
  *  Serial.begin()

@@ -8,6 +8,9 @@
  *  This code will read data from the serial port and echo it back to the serial port.
  *  
  *  Serial data is buffered on the Geekduino's chip and must be read in byte by byte.
+ *
+ *  This is a very basic demo of readinf data - there are many functions and ways to 
+ *  read data.
  *    
  * For a more in depth explanation of wiring,  this code and more information on using 
  * serial communication and Arduino check out ourserial communication tutorial
