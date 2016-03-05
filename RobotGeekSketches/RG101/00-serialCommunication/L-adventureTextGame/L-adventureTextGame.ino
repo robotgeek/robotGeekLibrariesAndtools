@@ -94,8 +94,8 @@ void loop()
 
 
   Serial.println(F("You find yourself in a giant labyrinth.  There are two paths in front of you. ")); 
-  Serial.println(F("Send 1 to go left"));
-  Serial.println(F("Send 2 to go right")); 
+  Serial.println(F("Enter 1 to go left"));
+  Serial.println(F("Enter 2 to go right")); 
 
   choice = readChoice();
 
@@ -134,8 +134,8 @@ void loop()
                 
 
 
-    Serial.println(F("Send 1 to eat the cake"));
-    Serial.println(F("Send 2 to keep going")); 
+    Serial.println(F("Enter 1 to eat the cake"));
+    Serial.println(F("Enter 2 to keep going")); 
 
     choice = readChoice();
 
@@ -147,8 +147,8 @@ void loop()
       Serial.println(F("Someone put a key in the cake! You look around and see 2 doors you didn't notice before. Each door has an old lock on it.  ")); 
 
 
-      Serial.println(F("Send 1 to use the key on the metal door"));
-      Serial.println(F("Send 2 to use the key on the wood door")); 
+      Serial.println(F("Enter 1 to use the key on the metal door"));
+      Serial.println(F("Enter 2 to use the key on the wood door")); 
 
       choice = readChoice();
 
@@ -186,8 +186,8 @@ void loop()
 
 
         Serial.println(F("You see two cauldrons, each with a liquid in it. There's a spoon that you can use to scoop out some liquid. ")); 
-        Serial.println(F("Send 1 to drink the red potion from the left cauldron"));
-        Serial.println(F("Send 2 to drink the blue potion from the right cauldron")); 
+        Serial.println(F("Enter 1 to drink the red potion from the left cauldron"));
+        Serial.println(F("Enter 2 to drink the blue potion from the right cauldron")); 
 
         choice = readChoice();
 
@@ -209,7 +209,7 @@ void loop()
                                                                      
                                                                      
 
-          Serial.println(F("Send 1 or 2 to start again"));
+          Serial.println(F("Enter 1 or 2 to start again"));
           choice = readChoice();
           //there are no choices here, so the code will go back to the beginning of the loop()
 
@@ -228,7 +228,7 @@ void loop()
         Serial.println(F("    | $$ |  $$$$$$/|  $$$$$$/      | $$$$$$$$|  $$$$$$/ /$$$$$$$/|  $$$$$$$ /$$"));
         Serial.println(F("    |__/  \\______/  \\______/       |________/ \\______/ |_______/  \\_______/|__/"));
                                                                                        
-          Serial.println(F("Send 1 or 2 to start again"));
+          Serial.println(F("Enter 1 or 2 to start again"));
           choice = readChoice();
           //there are no choices here, so the code will go back to the beginning of the loop()
 
@@ -251,7 +251,7 @@ void loop()
         Serial.println(F("    | $$ |  $$$$$$/|  $$$$$$/      | $$$$$$$$|  $$$$$$/ /$$$$$$$/|  $$$$$$$ /$$"));
         Serial.println(F("    |__/  \\______/  \\______/       |________/ \\______/ |_______/  \\_______/|__/"));
                                                                                        
-      Serial.println(F("Send 1 or 2 to start again"));
+      Serial.println(F("Enter 1 or 2 to start again"));
       choice = readChoice();
       //there are no choices here, so the code will go back to the beginning of the loop()
 
@@ -262,8 +262,8 @@ void loop()
   {
     Serial.println(F(""));
     Serial.println(F("You start along the right path. After a few minutes you come across a panel with 2 buttons on it.  ")); 
-    Serial.println(F("Send 1 press the red button"));
-    Serial.println(F("Send 2 to green button")); 
+    Serial.println(F("Enter 1 press the red button"));
+    Serial.println(F("Enter 2 to green button")); 
 
     choice = readChoice();
 
@@ -273,8 +273,8 @@ void loop()
       Serial.println(F("You Press the red button and the wall of the room opens up to show a huge computer screen."));
       Serial.println(F("On the screen you can see a huge meteor hurtling towards the labyrinth!" ));
       Serial.println(F("There's a switch next to the computer with 2 labels - to the left is labeled 'laser' to the right is labeled 'missle'   ")); 
-      Serial.println(F("Send 1 to flip the switch to the left"));
-      Serial.println(F("Send 2 to flip the switch to the right")); 
+      Serial.println(F("Enter 1 to flip the switch to the left"));
+      Serial.println(F("Enter 2 to flip the switch to the right")); 
 
       choice = readChoice();
 
@@ -296,7 +296,7 @@ void loop()
                                                                                  
                                                                                  
 
-        Serial.println(F("Send 1 or 2 to start again"));
+        Serial.println(F("Enter 1 or 2 to start again"));
         choice = readChoice();
        //there are no choices here, so the code will go back to the beginning of the loop()
       }
@@ -313,7 +313,7 @@ void loop()
         Serial.println(F("    | $$ | $$  | $$| $$  | $$      | $$ | $$ | $$| $$| $$  | $$    ")); 
         Serial.println(F("    | $$ |  $$$$$$/|  $$$$$$/      |  $$$$$/$$$$/| $$| $$  | $$ /$$")); 
         Serial.println(F("    |__/  \\______/  \\______/        \\_____/\\___/ |__/|__/  |__/|__/")); 
-        Serial.println(F("Send 1 or 2 to start again"));
+        Serial.println(F("Enter 1 or 2 to start again"));
         choice = readChoice();
       }
 

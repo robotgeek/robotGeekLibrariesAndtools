@@ -34,7 +34,7 @@ int guess;
 void setup()
 {
 
-  randomNumber = rand();  //generate a random number
+  randomNumber = random(0, 1001);  //generate a random number
 
   Serial.begin(9600);                                               //start the Serial port at a baud rate of 9600 bits per second (bps)
   Serial.println("Please Enter Your Name"); //print a header one time
@@ -53,8 +53,9 @@ void setup()
   }
 
   //print prompts  
-  Serial.print("Name: "); 
-  Serial.println(nameString); 
+  Serial.print("Helo "); 
+  Serial.print(nameString); 
+  Serial.println("! Please enter a number between 0 and 1000. "); 
   
   //uncomment the next 2 lines if you want to see the random number for debugging
   //Serial.print("Random: "); 
