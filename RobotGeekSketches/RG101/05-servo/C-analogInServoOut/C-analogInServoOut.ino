@@ -1,7 +1,7 @@
 /***********************************************************************************
  *   ___________
  *  |     __    |           RG 101 - Servo 
- *  |   /    \  |                Set Servo Degrees
+ *  |   /    \  |                Analog In Servo Out
  *  |  |      | |
  *  |   \ __ /  |
  *  |           |
@@ -50,6 +50,6 @@ void loop()
   
   servoValue = map(analogSensorValue, 0, 1023, SERVO_MAX_PULSE, SERVO_MIN_PULSE);  //the map functions converts a number from one range to another, so the analog input is mapped to the servo microsecond values
   servo1.writeMicroseconds(servoValue);  //send the servo to the value in 'servoValue', thus adjusting the servo based on the analog input
-  delay(100);  //short delay to account for servo movement
+  delay(10);  //short delay to account for servo movement
   
 }//go back to the first line in loop()

@@ -62,6 +62,6 @@ void loop()
   Serial.print(degreeValue);
   Serial.println("degrees");
   
-  delay(100);  //short delay to account for servo movement
+  delay(10);  //short delay to account for servo movement
   
 }//go back to the first line in loop()
