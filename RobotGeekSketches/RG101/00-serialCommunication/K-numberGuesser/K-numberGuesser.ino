@@ -53,7 +53,7 @@ void setup()
   }
 
   //print prompts  
-  Serial.print("Helo "); 
+  Serial.print("Hello "); 
   Serial.print(nameString); 
   Serial.println("! Please enter a number between 0 and 1000. "); 
   
