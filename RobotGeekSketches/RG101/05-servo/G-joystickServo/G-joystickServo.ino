@@ -39,8 +39,9 @@ const int DEADBANDLOW = 480;   //lower deadband value for the joysticks
 const int DEADBANDHIGH = 540;  //upper deadband value for the joysticks  
 
 int analogSensorValue;  //the raw value read from the analog sensor
-int servoValue;         //holds the current PWM value (0-255)\
-int speed = 10;         //alter this value to change the speed of the system. Higher values mean higher speeds 5-500 approximate recommended range
+int analogSensorValueMapped;  //the value read from the analog sensor, mapped to the degree
+int servoValue;         //holds the current PWM value (0-255)
+int servoSpeed = 10;         //alter this value to change the speed of the system. Higher values mean higher speeds 5-500 approximate recommended range
 
 Servo servo1;             //create servo object, 'servo1'
 
@@ -60,7 +61,7 @@ void loop()
    {
      //analogSensorValue will hold a value between 0 and 1023 that correspods to the location of the joystick. The map() function will convert this value
      //into a value between speed and -speed. This value can then be added to the current servoValue to incrementley move ths servo 
-     analogSensorValueMapped = map(analogSensorValue, 0, 1023, -speed, speed) ;
+     analogSensorValueMapped = map(analogSensorValue, 0, 1023, -1*servoSpeed, servoSpeed) ;
      
      servoValue = servoValue + analogSensorValueMapped; //add the analogSensorValueMapped to servoValue to slowly increment/decrement the tiltValue
      
