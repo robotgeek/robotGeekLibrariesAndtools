@@ -49,6 +49,7 @@ class WiiClassy
 	int rightStickY;
   
     void init();    
+    void init(int initUpdateInterval);    
     void update();
     
   private:  
@@ -58,7 +59,9 @@ class WiiClassy
     int status[4];              // array to store wiiclassic output
     int buttons[2];
     int lastButtons[2];	
-	
+	unsigned long lastReadTime;
+	int updateInterval;
+
 };
 
 #endif
