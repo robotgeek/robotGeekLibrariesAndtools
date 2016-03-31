@@ -123,7 +123,7 @@ int elbowIncrement = 0;     //elbow joystick value, mapped from 1-1023 to -speed
 int wristIncrement = 0;     //wrist joystick value, mapped from 1-1023 to -speed to speed
 int joyGripperMapped = 0;   //gripper knob  value, mapped from 1-1023 to GRIPPER_MIN-GRIPPER_MAX
 
-int speed = 10;  //speed modififer, increase this to increase the speed of the movement
+int speed = 2;  //speed modififer, increase this to increase the speed of the movement
 
 
 //===================================================================================================
@@ -133,14 +133,20 @@ void setup()
 {
 
   // Attach servo and set limits
-  baseServo.attach(BASE_SERVO_PIN, BASE_MIN, BASE_MAX);
-  shoulderServo.attach(SHOULDER_SERVO_PIN, SHOULDER_MIN, SHOULDER_MAX);
-  elbowServo.attach(ELBOW_SERVO_PIN, ELBOW_MIN, ELBOW_MAX);
-  wristServo.attach(WRIST_SERVO_PIN, WRIST_MIN, WRIST_MAX);
-  gripperServo.attach(GRIPPER_SERVO_PIN, GRIPPER_MIN, GRIPPER_MAX);
+  baseServo.attach(BASE_SERVO_PIN);
+  shoulderServo.attach(SHOULDER_SERVO_PIN);
+  elbowServo.attach(ELBOW_SERVO_PIN);
+  wristServo.attach(WRIST_SERVO_PIN);
+  gripperServo.attach(GRIPPER_SERVO_PIN);
   
   delay(1000);  //wait 1 second
   
+    baseServo.write(basePosition);
+    shoulderServo.write(shoulderPosition);
+    elbowServo.write(elbowPosition);
+    wristServo.write(wristPosition);
+    gripperServo.write(gripperPosition);
+
 
 }
 
@@ -171,14 +177,14 @@ void loop()
    if(joyShoulderVal > DEADBANDHIGH || joyShoulderVal < DEADBANDLOW)
    {
      shoulderIncrement = map(joyShoulderVal, 0, 1023, -speed, speed); //Map analog value from native joystick value (0 to 1023) to incremental change (-speed to speed)
-     shoulderPosition = shoulderPosition - shoulderIncrement; //add mapped shoulder joystick value to present Shoulder Value (positive values of joyShoulderMapped will increase the position, negative values will decrease the position)
+     shoulderPosition = shoulderPosition + shoulderIncrement; //add mapped shoulder joystick value to present Shoulder Value (positive values of joyShoulderMapped will increase the position, negative values will decrease the position)
    }
 
    
 
     //**********ELBOW SERVO CONTROL*********************/
    //only update the elbow joint if the joystick is outside the deadzone (i.e. moved oustide the center position)
-   if(elbowIncrement > DEADBANDHIGH || joyElbowVal < DEADBANDLOW)
+   if(joyElbowVal > DEADBANDHIGH || joyElbowVal < DEADBANDLOW)
    {
      elbowIncrement = map(joyElbowVal, 0, 1023, -speed, speed); //Map analog value from native joystick value (0 to 1023) to incremental change (-speed to speed)
      elbowPosition = elbowPosition + elbowIncrement;//add mapped elbow joystick value to present elbow Value (positive values of joyElbowMapped will increase the position, negative values will decrease the position)
@@ -188,7 +194,7 @@ void loop()
 
     //**********WRIST SERVO CONTROL*********************/
    //only update the wrist joint if the joystick is outside the deadzone (i.e. moved oustide the center position)
-   if(wristIncrement > DEADBANDHIGH || joyWristVal < DEADBANDLOW)
+   if(joyWristVal > DEADBANDHIGH || joyWristVal < DEADBANDLOW)
    {
      wristIncrement = map(joyWristVal, 0, 1023, -speed, speed); //Map analog value from native joystick value (0 to 1023) to incremental change (-speed to speed)
      wristPosition = wristPosition + wristIncrement;//add mapped wrist joystick value to present wrist Value (positive values of joyWristMapped will increase the position, negative values will decrease the position)
@@ -219,7 +225,7 @@ void loop()
     baseServo.write(basePosition);
     shoulderServo.write(shoulderPosition);
     elbowServo.write(elbowPosition);
-    wristServo.write(wristIncrement);
+    wristServo.write(wristPosition);
     gripperServo.write(gripperPosition);
 
     
