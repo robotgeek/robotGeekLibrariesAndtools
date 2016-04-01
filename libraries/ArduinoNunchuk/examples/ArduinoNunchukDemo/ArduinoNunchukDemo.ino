@@ -10,7 +10,7 @@
 #include <Wire.h>
 #include <ArduinoNunchuk.h>
 
-#define BAUDRATE 19200
+#define BAUDRATE 9600
 
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
@@ -24,17 +24,20 @@ void loop()
 {
   nunchuk.update();
   
+  Serial.print(" X Axis:" );
   Serial.print(nunchuk.analogX, DEC);
-  Serial.print(' ');
+  Serial.print(" Y Axis:" );
   Serial.print(nunchuk.analogY, DEC);
-  Serial.print(' ');
+  Serial.print(" Acc X:" );
   Serial.print(nunchuk.accelX, DEC);
-  Serial.print(' ');
+  Serial.print(" Acc Y:" );
   Serial.print(nunchuk.accelY, DEC);
-  Serial.print(' ');
+  Serial.print(" Acc Z:" );
   Serial.print(nunchuk.accelZ, DEC);
-  Serial.print(' ');
+  Serial.print(" Z button:" );
   Serial.print(nunchuk.zButton, DEC);
-  Serial.print(' ');
+  Serial.print(" C button:" );
   Serial.println(nunchuk.cButton, DEC);
+
+  delay(500);
 }
