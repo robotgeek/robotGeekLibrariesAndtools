@@ -31,26 +31,10 @@ void loop()
 {
   
   classy.update();//read data from the classic controller
-  
-  //read the left joystick and then map it from 0-63 to 0-255 for the PWM led
-  //pwmLEDValue = map(classy.leftStickY, LEFT_STICK_MIN, LEFT_STICK_MAX, PWM_MIN ,PWM_MAX);
-  
 
-  Serial.print(" left stick x: ");
-  Serial.print(classy.leftStickX);
-  
-  Serial.print(" left stick y: ");
-  Serial.print(classy.leftStickY);
-  
-  Serial.print(" right stick x: ");
-  Serial.print(classy.rightStickX);
-  
-  Serial.print(" right stick y: ");
-  Serial.print(classy.rightStickY);
-  
-  
-  Serial.print("Buttons:");
-  
+
+
+
   
   
   if (classy.leftShoulderPressed == true) {

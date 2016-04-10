@@ -34,11 +34,10 @@
 
 #include <Servo.h>
 
-const int ANALOG_PIN = 3;           //joystick sensor
+const int ANALOG_PIN = 0;           //joystick sensor
 const int SERVO_PIN = 9;            //pin number for the led pin - this is 'const' since it will not change during code, and saves Arduino memory
 const int SERVO_MIN_DEGREE = 0;     //minimum servo positon
 const int SERVO_MAX_DEGREE = 180;   //maximum servo position
-const int SERVO_CENTER_DEGREE = 90;  //middle servo position
 
 
 //deadband values for the joysticks - values between DEADBANDLOW and DEADBANDHIGH will be ignored
@@ -46,9 +45,8 @@ const int DEADBANDLOW = 480;   //lower deadband value for the joysticks. Inputs 
 const int DEADBANDHIGH = 540;  //upper deadband value for the joysticks. Inputs above this value will be used
 
 int analogSensorValue;  //the raw value read from the analog sensor
-int increment;          //the increment to change the servo positon by, derived from the analogSensorValue
-int servoValue;           //holds the servo position (0-180)
-int servoSpeed = 10;         //alter this value to change the speed of the system. Higher values mean higher speeds 5-500 approximate recommended range
+int servoValue = 90;           //holds the servo position (0-180)
+int servoIncrement = 10;         //alter this value to change the speed of the system. Higher values mean higher speeds 5-500 approximate recommended range
 
 Servo wristServo;             //create an instance of the servo class, 'wristServo'
 
@@ -63,23 +61,22 @@ void loop()
 {
   analogSensorValue = analogRead(ANALOG_PIN);   //read the analog sensor and store it in 'analogSensorValue' 
 
-   //check that the joystick is outisde of the deadband (i.e. if the analogSensorValue is less than DEADBANDLOW or snalogSensorValue is greater than DEADBANDHIGH) Movements in the deadband should not register
-   if(analogSensorValue < DEADBANDLOW || analogSensorValue > DEADBANDHIGH)
-   {
-     //analogSensorValue will hold a value between 0 and 1023 that correspods to the location of the joystick. The map() function will convert this value
-     //into a value between speed and -speed. 
 
-     increment = map(analogSensorValue, 0, 1023, -1*servoSpeed, servoSpeed) ;
-     
-     servoValue = servoValue + increment; //add the increment to servoValue to slowly increment/decrement the tiltValue
-     
-     // We need to keep the servo value between SERVO_MIN_DEGREE and SERVO_MAX_DEGREE. If values go above SERVO_MAX_DEGREE or below SERVO_MIN_DEGREE we will have eratic behavior.
-     // the contstrain function takes care of this. Values below SERVO_MIN_DEGREE are set to SERVO_MIN_DEGREE and above SERVO_MAX_DEGREE are set to SERVO_MAX_DEGREE 
-     servoValue = constrain(servoValue, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE);	//
-   }   
+    if(analogSensorValue < DEADBANDLOW)
+    {
+      servoValue = servoValue + servoIncrement;
+      servoValue = constrain(servoValue, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE);
+      wristServo.write(servoValue);  //send the servo to the value in 'servoValue', thus adjusting the servo based on the analog input
+      delay(1000);  //short delay to account for servo movement
+    }
+    else if(analogSensorValue > DEADBANDHIGH)
+    {
+      servoValue = servoValue - servoIncrement;
+      servoValue = constrain(servoValue, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE);
+      wristServo.write(servoValue);  //send the servo to the value in 'servoValue', thus adjusting the servo based on the analog input
+      delay(1000);  //short delay to account for servo movement
+    }
 
-   wristServo.write(servoValue);  //send the servo to the value in 'servoValue', thus adjusting the servo based on the analog input
-   delay(10);  //short delay to account for servo movement
 
   
 }//go back to the first line in loop()
