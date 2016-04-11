@@ -4,6 +4,9 @@
 #include "GlobalArm.h"
 #include <Arduino.h>
 
+
+extern ServoEx    ArmServo[5];
+
 extern boolean g_fServosFree;
 extern boolean  g_fArmActive;
 //////////////////////////////////////////////////////////////////////////////
@@ -197,6 +200,27 @@ void MoveArmToHome(void) {
 //    MoveArmTo(2048, 2048, 2048, 2048, 512, 256, 2000, true);
 //  }
 }
+
+
+
+
+//===================================================================================================
+// EmergencyStop
+//===================================================================================================
+void EmergencyStop(void) {
+  g_fArmActive = false;
+
+
+  ArmServo[BAS_SERVO].detach();
+  ArmServo[SHL_SERVO].detach();
+  ArmServo[ELB_SERVO].detach();
+  ArmServo[WRI_SERVO].detach();
+  ArmServo[GRI_SERVO].detach();
+  
+  g_fServosFree = true;
+}
+
+
 
 
 
