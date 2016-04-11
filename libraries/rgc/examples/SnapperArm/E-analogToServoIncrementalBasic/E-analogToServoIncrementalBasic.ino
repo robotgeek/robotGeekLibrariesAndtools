@@ -39,11 +39,6 @@ const int SERVO_PIN = 9;            //pin number for the led pin - this is 'cons
 const int SERVO_MIN_DEGREE = 0;     //minimum servo positon
 const int SERVO_MAX_DEGREE = 180;   //maximum servo position
 
-
-//deadband values for the joysticks - values between DEADBANDLOW and DEADBANDHIGH will be ignored
-const int DEADBANDLOW = 480;   //lower deadband value for the joysticks. Inputs below this value will be used
-const int DEADBANDHIGH = 540;  //upper deadband value for the joysticks. Inputs above this value will be used
-
 int analogSensorValue;  //the raw value read from the analog sensor
 int servoValue = 90;           //holds the servo position (0-180)
 int servoIncrement = 10;         //alter this value to change the speed of the system. Higher values mean higher speeds 5-500 approximate recommended range
@@ -62,14 +57,14 @@ void loop()
   analogSensorValue = analogRead(ANALOG_PIN);   //read the analog sensor and store it in 'analogSensorValue' 
 
 
-    if(analogSensorValue < DEADBANDLOW)
+    if(analogSensorValue < 480)
     {
       servoValue = servoValue + servoIncrement;
       servoValue = constrain(servoValue, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE);
       wristServo.write(servoValue);  //send the servo to the value in 'servoValue', thus adjusting the servo based on the analog input
       delay(1000);  //short delay to account for servo movement
     }
-    else if(analogSensorValue > DEADBANDHIGH)
+    else if(analogSensorValue > 540)
     {
       servoValue = servoValue - servoIncrement;
       servoValue = constrain(servoValue, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE);
