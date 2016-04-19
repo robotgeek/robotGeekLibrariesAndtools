@@ -31,12 +31,18 @@ class ArduinoNunchuk
     int accelZ;
     int zButton;
     int cButton;
+    int pitch;
+    int roll;
   
     void init();    
+    
+    void init(int initUpdateInterval);    
     void update();
     
   private:  
     void _sendByte(byte data, byte location);
+    unsigned long lastReadTime;
+    int updateInterval;
 };
 
 #endif

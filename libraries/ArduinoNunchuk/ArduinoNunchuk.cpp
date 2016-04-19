@@ -22,9 +22,21 @@
 #include "ArduinoNunchuk.h"
 
 #define ADDRESS 0x52
+#define DEFAULT_UPDATE_INTERVAL 33
 
-void ArduinoNunchuk::init()
+//from 
+// these may need to be adjusted for each nunchuck for calibration
+#define ZEROX 510  
+#define ZEROY 490
+#define ZEROZ 460
+#define RADIUS 210  // probably pretty universal
+
+
+void ArduinoNunchuk::init(int initUpdateInterval)
 {      
+
+  updateInterval = initUpdateInterval;  //set the update interval manually
+
   Wire.begin();
   
   ArduinoNunchuk::_sendByte(0x55, 0xF0);
@@ -32,29 +44,53 @@ void ArduinoNunchuk::init()
   
   ArduinoNunchuk::update();
 }
+
+
+//initialize with default update interval
+void ArduinoNunchuk::init()
+{  
+  init(DEFAULT_UPDATE_INTERVAL);
+}
+
+
+
     
 void ArduinoNunchuk::update()
-{ 
-  int count = 0;      
-  int values[5];
-  
-  Wire.requestFrom (ADDRESS, 6); 
-  
-  while(Wire.available())
+{   
+  if(millis() - lastReadTime > updateInterval)
   {
-    values[count] = Wire.read();
-    count++;
-  } 
-  
-  ArduinoNunchuk::analogX = values[0];
-  ArduinoNunchuk::analogY = values[1];      
-  ArduinoNunchuk::accelX = values[2] * 2 * 2 + ((values[5] >> 2) & 1) * 2 + ((values[5] >> 3) & 1);
-  ArduinoNunchuk::accelY = values[3] * 2 * 2 + ((values[5] >> 4) & 1) * 2 + ((values[5] >> 5) & 1);
-  ArduinoNunchuk::accelZ = values[4] * 2 * 2 + ((values[5] >> 6) & 1) * 2 + ((values[5] >> 7) & 1);
-  ArduinoNunchuk::zButton = !((values[5] >> 0) & 1);
-  ArduinoNunchuk::cButton = !((values[5] >> 1) & 1);
-  
-  ArduinoNunchuk::_sendByte(0x00, 0x00);
+
+    int count = 0;      
+    int values[6];
+    
+    Wire.requestFrom (ADDRESS, 6); 
+    
+    while(Wire.available())
+    {
+      values[count] = Wire.read();
+      count++;
+    } 
+    
+    ArduinoNunchuk::analogX = values[0];
+    ArduinoNunchuk::analogY = values[1];      
+    ArduinoNunchuk::accelX = values[2] * 2 * 2 + ((values[5] >> 2) & 1) * 2 + ((values[5] >> 3) & 1);
+    ArduinoNunchuk::accelY = values[3] * 2 * 2 + ((values[5] >> 4) & 1) * 2 + ((values[5] >> 5) & 1);
+    ArduinoNunchuk::accelZ = values[4] * 2 * 2 + ((values[5] >> 6) & 1) * 2 + ((values[5] >> 7) & 1);
+    ArduinoNunchuk::zButton = !((values[5] >> 0) & 1);
+    ArduinoNunchuk::cButton = !((values[5] >> 1) & 1);
+
+
+
+
+    //pitch/roll from  http://playground.arduino.cc/Main/WiiChuckClass
+    
+     ArduinoNunchuk::pitch = (int) (acos((float)(ArduinoNunchuk::accelY-ZEROY)/RADIUS)/ M_PI * 180.0);
+     ArduinoNunchuk::roll = (int)(atan2(((float)ArduinoNunchuk::accelX-ZEROX),((float)ArduinoNunchuk::accelZ-ZEROZ))/ M_PI * 180.0);
+
+    ArduinoNunchuk::_sendByte(0x00, 0x00);
+    
+    lastReadTime = millis();// update timer for next update
+  }
 }
   
 void ArduinoNunchuk::_sendByte(byte data, byte location)

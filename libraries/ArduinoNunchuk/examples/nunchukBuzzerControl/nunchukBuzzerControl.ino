@@ -9,21 +9,21 @@ WiiClassic LED Code
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 const int BUZZER_PIN = 3;
-const int FREQ_MIN = 31;
-const int FREQ_MAX = 65535;
+const unsigned int FREQ_MIN = 31;
+const unsigned int FREQ_MAX = 65535;
 
-const int DEADBAND_LOW = 120;
-const int DEADBAND_HIGH = 136;
+const int DEADBAND_LOW = 108;
+const int DEADBAND_HIGH = 148;
 
-int frequency;
+int frequency = 300;
 
 int frequencyIncrement;
 
-int frequencyInterval = 1000;
+int frequencyInterval = 1;
 
 void setup() 
 {
-  nunchuk.init();  //start classy library
+  nunchuk.init();  //start nunchuk library
   delay(100);
   nunchuk.update();  //read data from the classic controller
   pinMode(BUZZER_PIN, OUTPUT);
@@ -34,28 +34,29 @@ void loop()
   
   nunchuk.update();//read data from the classic controller
   
-  if(classy.analogX > DEADBAND_HIGH || classy.analogX < DEADBAND_LOW)
+  if(nunchuk.analogX > DEADBAND_HIGH || nunchuk.analogX < DEADBAND_LOW)
   {
-    frequencyIncrement = map(classy.analogX, 0, 255, -1*frequencyInterval, frequencyInterval );
+    frequencyIncrement = map(nunchuk.analogX, 0, 255, -1*frequencyInterval, frequencyInterval );
     frequency = frequency + frequencyIncrement;
   }
 
-  if(classy.pitch> DEADBAND_HIGH || classy.pitch < DEADBAND_LOW)
-  {
-    frequencyIncrement = map(classy.pitch, 0, 255, -1*frequencyInterval, frequencyInterval );
-    frequency = frequency + frequencyIncrement;
-  }
+//  if(nunchuk.pitch> DEADBAND_HIGH || nunchuk.pitch < DEADBAND_LOW)
+//  {
+//    frequencyIncrement = map(nunchuk.pitch, 0, 255, -1*frequencyInterval, frequencyInterval );
+//    frequency = frequency + frequencyIncrement;
+//  }
 
   
-  if (classy.zButton == true) 
+  if (nunchuk.zButton == true) 
   {
     frequency = 300;
   }
-  if (classy.cButton == true) 
+  if (nunchuk.cButton == true) 
   {
     frequency = 10000;
   }
 
+  frequency = constrain(frequency, FREQ_MIN, FREQ_MAX);
   
   tone(BUZZER_PIN, frequency);
   

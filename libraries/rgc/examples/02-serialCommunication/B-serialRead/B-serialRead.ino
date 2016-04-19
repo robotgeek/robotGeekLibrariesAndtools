@@ -40,9 +40,8 @@ void loop()
   if(Serial.available() > 0)
   {
     incomingData = Serial.read(); //read one character from the serial buffer and remove that character from the buffer
-    
-     Serial.print("You Typed: ");  //print static text
-     Serial.println(incomingData); //print the data that was recieved
+    Serial.print("You Typed: ");  //print static text
+    Serial.println(incomingData); //print the data that was recieved
     
   }
   

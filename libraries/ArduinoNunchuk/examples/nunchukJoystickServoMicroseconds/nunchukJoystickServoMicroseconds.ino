@@ -10,12 +10,16 @@ const int SERVO_PIN = 3;
 const int DEADBAND_LOW = 108;
 const int DEADBAND_HIGH = 148;
 
-int servo1Value = 90; //servo position
+const int SERVO_MIN_PULSE = 600;   //minimum servo pulse in microceconds (0 degrees)
+const int SERVO_MAX_PULSE = 2400;  //maximum servo pulse in microceconds (180 degrees)
+const int SERVO_CENTER_PULSE = 1500; //centered servo pulse in microceconds (90 degrees)
+
+int servo1Value = 1500; //servo position
 int servoIncrement;
 
 int leftStickXMapped; //value to hold the transformed joystick value 
 
-int spd = 5; //increase to increase servo speed
+int spd = 50; //increase to increase servo speed
 
 
 void setup() 
@@ -37,9 +41,9 @@ void loop()
   {
     servoIncrement = map(nunchuk.analogY, 0, 255, -spd, spd);
     servo1Value = servo1Value + servoIncrement;  //add the mapped value to the servo value
-    servo1Value = constrain(servo1Value, 0, 180);  //constrain the servo value to keep in between 0 and 180
+    servo1Value = constrain(servo1Value, SERVO_MIN_PULSE, SERVO_MAX_PULSE);  //constrain the servo value to keep in between 0 and 180
   }
     
-  servo1.write(servo1Value);  //write the value to the servo
+  servo1.writeMicroseconds(servo1Value);  //write the value to the servo
   delay(10);
 }
