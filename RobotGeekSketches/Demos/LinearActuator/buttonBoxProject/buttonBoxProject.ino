@@ -22,8 +22,8 @@
  *    Firgelli Mini Linear Actuators http://www.robotgeek.com/store/Search.aspx?SearchTerms=firgelli
  *    
  *  Wiring
- *    100mm Linear Actuator - Digital Pin 9 
- *
+ *    Small Linear Actuator - Digital Pin 10 
+ *    Button - Digital Pin 2
  *    Jumper for pins 9/10/11 should be set to 'VIN'
  *  
  *
