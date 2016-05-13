@@ -62,11 +62,8 @@ void setup()
   // initlaize the lcd object - this sets up all the variables and IIC setup for the LCD object to work
   lcd.init();
   // Print a message to the LCD.
-  lcd.write(244);
-  lcd.write(243);
-  lcd.write(242);
-  lcd.write(241);
-  lcd.print("\/");
+  lcd.print("Backlight Test");
+
 }
 
 void loop() 
