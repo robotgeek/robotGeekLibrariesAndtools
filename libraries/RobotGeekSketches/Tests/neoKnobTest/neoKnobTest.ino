@@ -17,15 +17,16 @@ const int NUMPIXELS = 12;     //number of pixels on neopixel ring
 //colors for main ring
 const int RED = 127; //0-127
 const int BLUE = 0;//0-127
-const int GREEN = 0;//0-127
+const int GREEN = 127;//0-127
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800); //start neopixel ring
 
 int neoPixelOn = -1; //top neopixel that is on
 
-unsigned long lastUpdateTime;//last time the neopixel was updates
-int updateInterval = 100;    //interval in ms ro update neopixels.
 int finalPixelColor;        //color for the 'final' neopixel, the one that the knob won't point to
+  
+unsigned long lastUpdateTime;//last time the neopixel was updates
+int updateInterval = 100;    //interval in ms to update neopixels.
 
 //setup() runs one time
 void setup() 
@@ -38,8 +39,9 @@ void loop()
 {
   //only run display function if updateInterval ms has passed
   if(millis() - lastUpdateTime > updateInterval)
-  {   
+  {      
     setNeoPixel(); //update neopixel
+    lastUpdateTime = millis();
   }  
 
  
@@ -51,6 +53,7 @@ void setNeoPixel()
   int realPixel;  //the neopixel is offset physically, so 'real' pixel represents the actual addressed pixel
 
   int knob0Value = analogRead(KNOB_PIN_0);  //read the value of the analog input on analog pin KNOB_PIN and store it in knobValue
+
 
   //the knob it not totally linear at the ends, so this mapping gets a more accurate representation of knob - pixel realation
   if(knob0Value >= 1013)
@@ -112,8 +115,8 @@ void setNeoPixel()
       pixels.setPixelColor(realPixel, pixels.Color(0,0,0)); // rgb color 0,0,0 is off
     }
    }
-
-    finalPixelColor = (finalPixelColor + 1)&255;  //the knob can never point ot the 'final' pixel, pixel 1. So create a 0-255 value to generate a color
+  
+    finalPixelColor = (finalPixelColor + 10)%255;  //the knob can never point ot the 'final' pixel, pixel 1. So create a 0-255 value to generate a color
     pixels.setPixelColor(1, Wheel(finalPixelColor)); // use Wheel() to generate a color from 0-255
 
     pixels.show(); // This sends the updated pixel color to the hardware.
