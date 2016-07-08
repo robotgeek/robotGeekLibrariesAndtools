@@ -41,7 +41,7 @@ const int LED_PIN = 3;      //digital pin number for LED
 const int BUTTON_PIN = 2;   //digital pin number for button
 const int KNOB_PIN = 0;     //analog pin number for knob
 const int SERVO_PIN = 11;   //digital pin number for servo
-const int RANDOM_PIN = 1;   //analog pin number for random number generator
+const int RANDOM_PIN = 7;   //analog pin number for random number generator
 
 char incomingData;  //create an empty chracter variable to hold the incoming data, one character at a time
 String nameString;  //holds the name of the user as a String (an series of characters)

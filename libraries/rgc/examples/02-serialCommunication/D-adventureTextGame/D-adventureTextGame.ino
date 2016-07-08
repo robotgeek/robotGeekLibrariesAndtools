@@ -164,7 +164,7 @@ void loop()
       }
       else if (choice == 2)
       {
-        randomSeed(analogRead(0));
+        randomSeed(analogRead(7)); 
         int randomNumber = random(1,3); //generate a random number between 1 and 2
 
         Serial.println(randomNumber);

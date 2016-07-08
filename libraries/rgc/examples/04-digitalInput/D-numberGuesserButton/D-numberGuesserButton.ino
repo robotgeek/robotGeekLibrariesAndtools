@@ -48,7 +48,7 @@ void setup()
   
   digitalWrite(LED_PIN, LOW); //set the LED low.
 
-  randomSeed(analogRead(0));       //seed the random number generator based on a 'random' reading from an unconnected analog input
+  randomSeed(analogRead(7));       //seed the random number generator based on a 'random' reading from an unconnected analog input
   randomNumber = random(0, MAX_RANDOM_NUMBER + 1);  //generate a random number
 
   Serial.begin(9600);              //start the Serial port at a baud rate of 9600 bits per second (bps)
