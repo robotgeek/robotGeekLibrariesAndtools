@@ -55,8 +55,8 @@ unsigned long tagID; //the lower 4 byted of the tag ID
 
 void setup()
 {
-  //begin serial communicatons at 38400 baud and print a startup message
-  SERIAL_PORT.begin(38400);
+  //begin serial communicatons at 9600 baud and print a startup message
+  SERIAL_PORT.begin(9600);
 
   //The RFIDUINO hardware pins and user outputs(Buzzer / LEDS) are all initialized via pinMode() in the library initialization, so you don not need to to that manually
 }
