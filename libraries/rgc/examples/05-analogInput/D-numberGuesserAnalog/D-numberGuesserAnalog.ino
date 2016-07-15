@@ -81,7 +81,7 @@ void loop()
     Serial.println("Please Enter Your Name"); //print a user prompt 
     
     randomMax = analogRead(KNOB_PIN) + 1;   //read the analog value. Add one so that the maximum random value will be at least 1
-    randomNumber = random(0, randomMax);  //generate a random number from 0 to randomMax-1
+    randomNumber = random(randomMax);  //generate a random number from 0 to randomMax-1
 
     //while the startFlag is false, read for data.
     while(startFlag == false)

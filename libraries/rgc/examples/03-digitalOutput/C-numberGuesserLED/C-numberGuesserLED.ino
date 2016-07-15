@@ -40,7 +40,7 @@ void setup()
   digitalWrite(LED_PIN, LOW); //turn the LED off
 
   randomSeed(analogRead(7));        //seed the random number generator based on a 'random' reading from an unconnected analog input
-  randomNumber = random(0, 1001);   //generate a random number
+  randomNumber = random(1001);   //generate a random number
 
   Serial.begin(9600);                                               //start the Serial port at a baud rate of 9600 bits per second (bps)
   Serial.println("Please Enter Your Name"); //print a header one time
