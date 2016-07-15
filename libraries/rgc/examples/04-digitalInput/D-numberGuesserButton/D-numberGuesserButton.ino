@@ -48,14 +48,9 @@ void setup()
   
   digitalWrite(LED_PIN, LOW); //set the LED low.
 
-  randomSeed(analogRead(7));       //seed the random number generator based on a 'random' reading from an unconnected analog input
-  randomNumber = random(MAX_RANDOM_NUMBER + 1);  //generate a random number
-
   Serial.begin(9600);              //start the Serial port at a baud rate of 9600 bits per second (bps)
   
-  //uncomment the next 2 lines if you want to see the random number for debugging
-  //Serial.print("Random: "); 
-  //Serial.println(randomNumber); 
+
 } //setup() is done, go to loop()
 
 //loop runs forever once setup is complete
@@ -83,6 +78,7 @@ void loop()
     digitalWrite(LED_PIN, LOW); //write the LED low, this will set the LED off if the program is started / restarted
     Serial.println("Please Enter Your Name"); //print a header one time   
       
+    //run the loop while startFlag is false (it will be false when the game starts / is restarted). This loop will automatically end when startFlag is set to true  
     while(startFlag == false)
     {
       //see if data is available on the serial port
@@ -95,6 +91,14 @@ void loop()
         Serial.print(startFlag); 
         Serial.print("! Please enter a number between 0 and "); 
         Serial.println(MAX_RANDOM_NUMBER); 
+
+        //generate the random number              
+        randomSeed(analogRead(7));       //seed the random number generator based on a 'random' reading from an unconnected analog input
+        randomNumber = random(MAX_RANDOM_NUMBER + 1);  //generate a random number
+        //uncomment the next 2 lines if you want to see the random number for debugging
+        //Serial.print("Random: "); 
+        //Serial.println(randomNumber); 
+
       } //end if
     }//end while
   }//end if
