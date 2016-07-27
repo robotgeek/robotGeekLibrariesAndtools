@@ -1,0 +1,30 @@
+# RobotGeek Board Configuration
+#
+# For more information see:
+# - https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
+# - https://github.com/arduino/Arduino/wiki/Arduino-Hardware-Cores-migration-guide-from-1.0-to-1.6
+#
+# Adapted from Adafruit boards.txt
+
+
+
+
+##############################################################
+geekduino.name=RobotGeek Geekduino
+geekduino.upload.tool=arduino:avrdude
+geekduino.upload.protocol=arduino
+geekduino.upload.maximum_size=30720
+geekduino.upload.maximum_data_size=2048
+geekduino.upload.speed=57600
+geekduino.bootloader.tool=arduino:avrdude
+geekduino.bootloader.low_fuses=0xFF
+geekduino.bootloader.high_fuses=0xDA
+geekduino.bootloader.extended_fuses=0x05
+geekduino.bootloader.unlock_bits=0x3F
+geekduino.bootloader.lock_bits=0x0F
+geekduino.bootloader.file=atmega/ATmegaBOOT_168_atmega328.hex
+geekduino.build.mcu=atmega328p
+geekduino.build.f_cpu=16000000L
+geekduino.build.board=AVR_GEEKDUINO
+geekduino.build.core=arduino:arduino
+geekduino.build.variant=arduino:standard

@@ -27,9 +27,6 @@
 const int LED_PIN = 13; //pin for the LED driver
 
 char incomingData;  //create an empty chracter variable to hold the incoming data, one character at a time
-String nameString;  //holds the name of the user as a String (an series of characters)
-
-bool nameFlag = false;  //a flag to check if the user has started the game / put in their name yet, set to false to assume they have not. We will also use this to reset the program if the button is pressed
 int randomNumber;      //the random number that the user is trying to guess
 int guess;             //the last guess the user entered
 
@@ -43,26 +40,9 @@ void setup()
   randomNumber = random(1001);   //generate a random number
 
   Serial.begin(9600);                                               //start the Serial port at a baud rate of 9600 bits per second (bps)
-  Serial.println("Please Enter Your Name"); //print a header one time
   
-  //loop while the nameFlag is still false (i.e. no name has been entered)
-  while(nameFlag == false)
-  {
-    //see if data is available on the serial port
-    if(Serial.available() == true)
-    {
-      nameString = Serial.readString(); //read the data as a string
+  readUsersName(); // read the users name - make sure to call this after the Serial port has been started
 
-      nameFlag = true; //a string has been sucessfully read, so change the flag so that we can leave the while loop
-
-    }
-  }
-
-  //print prompts  
-  Serial.print("Hello "); 
-  Serial.print(nameString); 
-  Serial.println("! Please enter a number between 0 and 1000. "); 
-  
   //uncomment the next 2 lines if you want to see the random number for debugging
   //Serial.print("Random: "); 
   //Serial.println(randomNumber); 
@@ -108,6 +88,32 @@ void loop()
 
 }//go back to the first line in loop()
 
+
+void readUsersName()
+{
+  String nameString;  //holds the name of the user as a String (an series of characters)
+  bool nameFlag = false;  //a flag to check if the user has started the game / put in their name yet, set to false to assume they have not. We will also use this to reset the program if the button is pressed
+
+  Serial.println("Please Enter Your Name"); //print a header one time
+  
+   //loop while the nameFlag is still false (i.e. no name has been entered)
+  while(nameFlag == false)
+  {
+    //see if data is available on the serial port
+    if(Serial.available() == true)
+    {
+      nameString = Serial.readString(); //read the data as a string
+
+      nameFlag = true; //a string has been sucessfully read, so change the flag so that we can leave the while loop
+
+    }
+  }
+  //print prompts  
+  Serial.print("Hello "); 
+  Serial.print(nameString); 
+  Serial.println("! Please enter a number between 0 and 1000. "); 
+  
+}
 
 
 
