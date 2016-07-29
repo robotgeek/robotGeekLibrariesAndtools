@@ -20,7 +20,8 @@
  *  Serial.read()
  *  Serial.parseInt()
  *  Serial.readString()
- *  rand()
+ *  random()
+ *  randomSeed()
  *  digitalWrite()
  *****************************************************************************************/
 

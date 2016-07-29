@@ -19,7 +19,8 @@
  *  Serial.println()
  *  Serial.available()
  *  Serial.parseInt()
- *  rand()
+ *  randomSeed()
+ *  random()
  *****************************************************************************************/
 
 int randomNumber;      //the random number that the user is trying to guess
@@ -32,13 +33,13 @@ void setup()
   randomSeed(analogRead(7));        //seed the random number generator based on a 'random' reading from an unconnected analog input
   randomNumber = random(1001);   //generate a random number
 
-  Serial.begin(9600);                                               //start the Serial port at a baud rate of 9600 bits per second (bps)
+  Serial.begin(9600); //start the Serial port at a baud rate of 9600 bits per second (bps)
   
   //print prompts  
   Serial.println("Hello! Please enter a number between 0 and 1000. "); 
   
   //uncomment the next 2 lines if you want to see the random number for debugging
-  //Serial.print("Random: "); 
+  //Serial.print("Random Number: "); 
   //Serial.println(randomNumber); 
 
   
