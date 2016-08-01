@@ -76,31 +76,22 @@ void loop()
     Serial.println("  |__/  \\__/ \\______/ |__/ |__/ |__/|_______/  \\_______/|__/             \\______/  \\______/  \\_______/|_______/|_______/  \\_______/|__/      ");
     
     digitalWrite(LED_PIN, LOW); //write the LED low, this will set the LED off if the program is started / restarted
-    Serial.println("Please Enter Your Name"); //print a header one time   
-      
-    //run the loop while startFlag is false (it will be false when the game starts / is restarted). This loop will automatically end when startFlag is set to true  
-    while(startFlag == false)
-    {
-      //see if data is available on the serial port
-      if(Serial.available() == true)
-      {
-        nameString = Serial.readString(); //read the data as a string
-        startFlag = true; //a string has been sucessfully read, so change the flag so that we can leave the while loop
-        //print prompts  
-        Serial.print("Hello "); 
-        Serial.print(startFlag); 
-        Serial.print("! Please enter a number between 0 and "); 
-        Serial.println(MAX_RANDOM_NUMBER); 
 
-        //generate the random number              
-        randomSeed(analogRead(7));       //seed the random number generator based on a 'random' reading from an unconnected analog input
-        randomNumberToGuess = random(MAX_RANDOM_NUMBER + 1);  //generate a random number
-        //uncomment the next 2 lines if you want to see the random number for debugging
-        //Serial.print("Random: "); 
-        //Serial.println(randomNumberToGuess); 
+    nameString = readUsersName(); // read the users name - make sure to call this after the Serial port has been started
+    
+    Serial.print("Hello "); 
+    Serial.print(nameString); 
+    Serial.print("! Please enter a number between 0 and "); 
+    Serial.println(MAX_RANDOM_NUMBER); 
 
-      } //end if
-    }//end while
+    //generate the random number              
+    randomSeed(analogRead(7));       //seed the random number generator based on a 'random' reading from an unconnected analog input
+    randomNumberToGuess = random(MAX_RANDOM_NUMBER + 1);  //generate a random number
+    //uncomment the next 2 lines if you want to see the random number for debugging
+    //Serial.print("Random: "); 
+    //Serial.println(randomNumberToGuess); 
+    
+    startFlag = true;
   }//end if
 
 
@@ -154,6 +145,30 @@ void loop()
   
 }//go back to the first line in loop()
 
+
+
+String readUsersName()
+{
+  String nameStringLocal;  //holds the name of the user as a String (an series of characters)
+  bool nameFlag = false;  //a flag to check if the user has  put in their name yet, set to false to assume they have not. 
+
+  Serial.println("Please Enter Your Name"); //print a header one time
+  
+   //loop while the nameFlag is still false (i.e. no name has been entered)
+  while(nameFlag == false)
+  {
+    //see if data is available on the serial port
+    if(Serial.available() == true)
+    {
+      nameStringLocal = Serial.readString(); //read the data as a string
+      nameFlag = true; //a string has been sucessfully read, so change the flag so that we can leave the while loop
+    }
+  }
+
+  return(nameStringLocal);
+ 
+  
+}
 
 
 
