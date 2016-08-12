@@ -45,14 +45,19 @@ void loop()
     Serial.print("You Guessed: ");  //print static text
     Serial.println(userGuess); //print the data that was recieved
 
+    //check if the number the user guessed is more than the number to guess - if it is, then tell the user by printing a message
     if(userGuess > numberToGuess)
     {
       Serial.println("You Guess is too high");  //print static text
     }    
+    
+    //if not, check if the number the user guessed is less than the number to guess - if it is, then tell the user by printing a message
     else if(userGuess < numberToGuess)
     {
       Serial.println("You Guess is too low");  //print static text
     }
+    
+    //if not, check if the number the user guessed is equal to the number to guess - if it is, then tell the user by printing a message
     else if(userGuess == numberToGuess)
     {
       Serial.println("You guessed correctly!");  //print static text

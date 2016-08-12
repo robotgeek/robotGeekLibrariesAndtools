@@ -38,9 +38,10 @@ char incomingData;  //create an empty chracter variable to hold the incoming dat
 String nameString;  //holds the name of the user as a String (an series of characters)
 
 bool startFlag = false;  //a flag to check if the user has started the game / put in their name yet, set to false to assume they have not. We will also use this to reset the program if the button is pressed
-int randomNumbertoGuess;      //the random number that the user is trying to guess
+int randomNumberToGuess;      //the random number that the user is trying to guess
 int userGuess;             //the last guess the user entered
 int randomMax;         //maximum random nuber for the current game
+int gamesWon = 0;            //the number of times you have won the game
 int guessDifference;   //difference between guess and random number, used to deterimine the hint LED brightness
 int ledValue = 0;       //the brightness of the led fromm 0-255
 
@@ -52,24 +53,18 @@ void setup()
   
   digitalWrite(LED_PIN, LOW); //turn the LED off
 
-  randomSeed(analogRead(RANDOM_PIN));        //seed the random number generator based on a 'random' reading from an unconnected analog input.
+  randomSeed(analogRead(RANDOM_PIN)); //seed the random number generator based on a 'random' reading from an unconnected analog input. In this example, we've done botht he analogRead() and randomSeed() in the same line
   
   Serial.begin(9600);   //start the Serial port at a baud rate of 9600 bits per second (bps)
- 
-  //uncomment the next 2 lines if you want to see the random number for debugging
-  //Serial.print("Random Number: "); 
-  //Serial.println(randomNumber); 
 
 } //setup() is done, go to loop()
 
 //loop runs forever once setup is complete
 void loop()
 {
-
-
    /*************************************************************************
-   * loop while the nameFlag is still false (i.e. no name has been entered)
-   *************************************************************************/
+    * check to see if the game has not started yet / has been reset. 
+    *************************************************************************/
    if(startFlag == false)
    {
 
@@ -92,12 +87,11 @@ void loop()
   
     ledValue = 0;                   //reset the ledvalue to 0, i.e. off
     analogWrite(LED_PIN, ledValue); //write the LED value to the LED pin
-    
-    Serial.println("Please Enter Your Name"); //print a user prompt 
-    
-    randomMax = analogRead(KNOB_PIN) + 1;   //read the analog value. Add one so that the maximum random value will be at least 1
-    randomNumbertoGuess = random(randomMax);  //generate a random number from 0 to randomMax-1
 
+    randomMax = analogRead(KNOB_PIN) + 1;   //read the analog value. Add one so that the maximum random value will be at least 1
+    randomNumberToGuess = random(randomMax);  //generate a random number from 0 to randomMax-1
+
+    Serial.println("Please Enter Your Name"); //print a user prompt
     //while the startFlag is false, read for data.
     while(startFlag == false)
     {
@@ -109,7 +103,7 @@ void loop()
         //print prompts  
         Serial.print("Hello "); 
         Serial.print(nameString); 
-        Serial.print("! Please enter a number between 0 and . "); 
+        Serial.print("! Please enter a number between 0 and  "); 
         Serial.println(randomMax); 
         
         startFlag = true; //a string has been sucessfully read, so change the flag so that we can leave the while loop  and progress with the program
@@ -140,19 +134,31 @@ void loop()
     Serial.print("You Guessed: ");  //print static text
     Serial.println(userGuess);          //print the data that was recieved
 
-    if(userGuess > randomNumbertoGuess)
+  //check if the number the user guessed is more than the number to guess - if it is, then tell the user by printing a message
+    if(userGuess > randomNumberToGuess)
     {
       Serial.println("You Guess is too high");  //print static text
-    }
+    }    
     
-    else if(userGuess < randomNumbertoGuess)
+    //if not, check if the number the user guessed is less than the number to guess - if it is, then tell the user by printing a message
+    else if(userGuess < randomNumberToGuess)
     {
       Serial.println("You Guess is too low");  //print static text
     }
     
-    else if(userGuess == randomNumbertoGuess)
+    //if not, check if the number the user guessed is equal to the number to guess - if it is, then tell the user by printing a message and making changes that represent the game being won.
+    else if(userGuess == randomNumberToGuess)
     {
+      gamesWon = gamesWon + 1; //the game has been won, so increase the count.
+    
       Serial.println("You guessed correctly!");  //print static text
+      
+      Serial.print("You have won the game ");//print static text
+      Serial.print(gamesWon);//print the value of the variable
+      Serial.println(" time!");//print static text
+      
+      Serial.println("Press your pushbutton to restart the game.");  //print static text
+
 
       //pulse LED for winner 3 times
       for (int j = 0; j< 3; j++)
@@ -175,7 +181,7 @@ void loop()
 
     }//end else if
 
-    guessDifference = abs(randomNumbertoGuess - userGuess);            //find the difference between the random number and the guess. Use abs() to make all numbers positive (absolute value)
+    guessDifference = abs(randomNumberToGuess - userGuess);            //find the difference between the random number and the guess. Use abs() to make all numbers positive (absolute value)
     ledValue = map(guessDifference, 0, randomMax, 255, 0);  //map the difference to PWM values for the LED
     analogWrite(LED_PIN, ledValue);                          //write the ledValue to the LED_PIN
   }//end serial.available() check

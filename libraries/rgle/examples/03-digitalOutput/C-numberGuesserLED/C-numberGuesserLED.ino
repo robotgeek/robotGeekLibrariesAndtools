@@ -21,7 +21,6 @@
  *  Serial.parseInt()
  *  Serial.readString()
  *  random()
- *  randomSeed()
  *  digitalWrite()
  *****************************************************************************************/
 
@@ -37,13 +36,13 @@ void setup()
   digitalWrite(LED_PIN, LOW); //turn the LED off
 
   Serial.begin(9600);                                               //start the Serial port at a baud rate of 9600 bits per second (bps)
-  
-  randomSeed(analogRead(7));        //seed the random number generator based on a 'random' reading from an unconnected analog input
-  randomNumberToGuess = random(1001);   //generate a random number
+  randomNumberToGuess = random(1001);   //generate a 'random' number.
+  //randomNumberToGuess = random(1001); //everytime you call random() a new random number is picked. Try calling random() multiple times by uncommenting this line
+  //randomNumberToGuess = random(1001);   
   
   //uncomment the next 2 lines if you want to see the random number for debugging
   //Serial.print("Random Number: "); 
-  //Serial.println(randomNumber); 
+  //Serial.println(randomNumberToGuess); 
   
   //print prompts  
   Serial.println("Hello! Please enter a number between 0 and 1000. "); 
@@ -61,17 +60,23 @@ void loop()
      Serial.print("You Guessed: ");  //print static text
      Serial.println(userGuess); //print the data that was recieved
 
+    //check if the number the user guessed is more than the number to guess - if it is, then tell the user by printing a message
     if(userGuess > randomNumberToGuess)
     {
       Serial.println("You Guess is too high");  //print static text
-    }
+    }    
+    
+    //if not, check if the number the user guessed is less than the number to guess - if it is, then tell the user by printing a message
     else if(userGuess < randomNumberToGuess)
     {
       Serial.println("You Guess is too low");  //print static text
     }
+    
+    //if not, check if the number the user guessed is equal to the number to guess - if it is, then tell the user by printing a message
     else if(userGuess == randomNumberToGuess)
     {
       Serial.println("You guessed correctly!");  //print static text
+      
       //flash the LED on/off twice, ending with the LED on.
       digitalWrite(LED_PIN, HIGH);
       delay(500);

@@ -21,6 +21,7 @@
  *  Serial.parseInt()
  *  Serial.readString()
  *  rand()
+ *  randomSeed()
  *  digitalWrite()
  *  digitalRead()
  *  analogRead()
@@ -34,9 +35,11 @@ const int RANDOM_PIN = 7;    //analog pin number for random number generator
 bool startFlag = false;         //a flag to check if the user has started the game / put in their name yet, set to false to assume they have not. We will also use this to reset the program if the button is pressed
 String nameString;  //holds the name of the user as a String (an series of characters)
 
-int randomNumberToGuess;      //the random number that the user is trying to guess
+int randomNumberToGuess;   //the random number that the user is trying to guess
 int userGuess;             //the last guess the user entered
-int randomMax;         //maximum random for this game
+int randomMax;             //maximum random for this game
+int numberForSeed;         //number we'll use to seed the 
+int gamesWon = 0;            //the number of times you have won the game
 
 //setup runs once when the Geekduino/Arduino is turned on
 void setup()
@@ -46,13 +49,12 @@ void setup()
   
   digitalWrite(LED_PIN, LOW); //turn the LED off
 
-  randomSeed(analogRead(RANDOM_PIN));        //seed the random number generator based on a 'random' reading from an unconnected analog input
+  numberForSeed = analogRead(RANDOM_PIN); //if you read an analog pin with nothing connected, you will get a 'random' number. We will use this number to seed the random number generator
+
+  randomSeed(numberForSeed); //seed the random number generator based on a the reading from the unconnected analog pin
   
   Serial.begin(9600);  //start the Serial port at a baud rate of 9600 bits per second (bps)
-  
-  //uncomment the next 2 lines if you want to see the random number for debugging
-  //Serial.print("Random: "); 
-  //Serial.println(randomNumberToGuess); 
+
 
 } //setup() is done, go to loop()
 
@@ -60,11 +62,14 @@ void setup()
 void loop()
 {
 
+
    /*************************************************************************
-   * loop while the nameFlag is still false (i.e. no name has been entered)
-   *************************************************************************/
+    * check to see if the game has not started yet / has been reset. 
+    *************************************************************************/
    if(startFlag == false)
-   {
+   {  
+     digitalWrite(LED_PIN, LOW); //write the LED low, this will set the LED off if the program is started / restarted. Do this before anything else so that the LED turns off right away
+
      //print ASCII art text
     Serial.println("   ");
     Serial.println("   "); 
@@ -77,31 +82,20 @@ void loop()
     Serial.println("  | $$\\  $$$| $$  | $$| $$ | $$ | $$| $$  | $$| $$_____/| $$            | $$  \\ $$| $$  | $$| $$_____/ \\____  $$\\____  $$| $$_____/| $$      ");
     Serial.println("  | $$ \\  $$|  $$$$$$/| $$ | $$ | $$| $$$$$$$/|  $$$$$$$| $$            |  $$$$$$/|  $$$$$$/|  $$$$$$$ /$$$$$$$//$$$$$$$/|  $$$$$$$| $$      ");
     Serial.println("  |__/  \\__/ \\______/ |__/ |__/ |__/|_______/  \\_______/|__/             \\______/  \\______/  \\_______/|_______/|_______/  \\_______/|__/      ");
-    
-    digitalWrite(LED_PIN, LOW); //write the LED value to the LED pin
-    
-    Serial.println("Please Enter Your Name"); //print a user prompt 
-    
+        
     randomMax = analogRead(KNOB_PIN) + 1;   //read the analog value. Add one so that the maximum random value will be at least 1
     randomNumberToGuess = random(randomMax + 1);  //generate a random number from 0 to randomMax
+ 
+    //uncomment the next 2 lines if you want to see the random number for debugging
+    Serial.print("Random: "); 
+    Serial.println(randomNumberToGuess);   
 
-    //while the startFlag is false, read for data.
-    while(startFlag == false)
-    {
-      //see if data is available on the serial port - if data is available, we're assuming that the name data has come in.
-      if(Serial.available() == true)
-      {
-        nameString = Serial.readString(); //read the data as a string
+    //print instructions
+    Serial.print("Hello ! Please enter a number between 0 and "); 
+    Serial.println(randomMax); 
         
-        //print prompts  
-        Serial.print("Hello "); 
-        Serial.print(nameString); 
-        Serial.print("! Please enter a number between 0 and  "); 
-        Serial.println(randomMax); 
-        
-        startFlag = true; //a string has been sucessfully read, so change the flag so that we can leave the while loop  and progress with the program
-      }//end if
-    }//end while
+    startFlag = true;   //the game has started, so set the startFlag to true
+
    }//end if
 
 
@@ -121,28 +115,38 @@ void loop()
    * Serial.available() returns the number of characters that have been input
    * so check if there are more than 0 characters
    *************************************************************************/
-  //check is there are any characters incoming on the serial buffer.
   if(Serial.available() > 0)
   {
+    userGuess = Serial.parseInt(); //read one character from the serial buffer and remove that character from the buffer
 
-    userGuess = Serial.parseInt();      //Serial.parseInt() will take the chacarters in the buffer and try to create an decimal integer
     Serial.print("You Guessed: ");  //print static text
-    Serial.println(userGuess);          //print the data that was recieved
+    Serial.println(userGuess); //print the data that was recieved
 
+    //check if the number the user guessed is more than the number to guess - if it is, then tell the user by printing a message
     if(userGuess > randomNumberToGuess)
     {
       Serial.println("You Guess is too high");  //print static text
-    }
+    }    
     
+    //if not, check if the number the user guessed is less than the number to guess - if it is, then tell the user by printing a message
     else if(userGuess < randomNumberToGuess)
     {
       Serial.println("You Guess is too low");  //print static text
     }
     
+    //if not, check if the number the user guessed is equal to the number to guess - if it is, then tell the user by printing a message and making changes that represent the game being won.
     else if(userGuess == randomNumberToGuess)
     {
-      Serial.println("You guessed correctly!");  //print static text
-      //blink LED on/off for winner
+      gamesWon = gamesWon + 1; //the game has been won, so increase the count.
+      Serial.println("You guessed correctly!");//print static text
+      
+      Serial.print("You have won the game ");//print static text
+      Serial.print(gamesWon);//print the value of the variable
+      Serial.println(" time!");//print static text
+      
+      Serial.println("Press your pushbutton to restart the game.");  //print static text
+
+      //flash the LED on/off 
       digitalWrite(LED_PIN, HIGH);
       delay(500);
       digitalWrite(LED_PIN, LOW);
@@ -153,8 +157,8 @@ void loop()
       delay(500);
       digitalWrite(LED_PIN, HIGH);
     }//end else if
-  }//end serial.available() check
-
+  }//end Serial.avaialble() if
+  
 }//go back to the first line in loop()
 
 
