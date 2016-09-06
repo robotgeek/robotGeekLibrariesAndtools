@@ -17,8 +17,8 @@
 #include <LiquidCrystal_I2C.h>    //Load the LiquidCrystal I2C Library for the 4 Line LCD Display
 
 // Buttons
-const int BUTTON_PIN[4] = {16, 17, 20, 21};
-int value[4] = {16, 17, 20, 21};
+const int BUTTON_PIN[4] = {14, 15, 16, 17};
+int value[4] = {14, 15, 16, 17};
 
 
 
