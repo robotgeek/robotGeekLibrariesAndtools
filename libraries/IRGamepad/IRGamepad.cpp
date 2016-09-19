@@ -91,7 +91,6 @@ bool IR_Gamepad::update_button_states()
   }
   else //Controller expected to be in modeB
   {
-    Serial.println( "ModeB" );
     switch ( _lastHash ) 
     {
       case UP_BUTTONB:
