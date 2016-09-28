@@ -58,7 +58,7 @@ String promptLine[4] = {
 
 // Selections
 String selectionLine[14] = {
-                   "                   ",  //buffer line
+                   "                   ",  //buffer line. Leave here or experience terror.
                    "1. Red             ", 
                    "2. Green           ",
                    "3. Blue            ",
@@ -69,16 +69,20 @@ String selectionLine[14] = {
                    "8. Green & Blue    ",
                    "9. Black & White   ",
                    "10. Black & Yellow ",
-                   "                   ",  //buffer line
-                   "                   ",  //buffer line
-                   "End of List        "   //buffer line
+                   "                   ",  //buffer line. Leave here or experience terror.
+                   "                   ",  //buffer line. Leave here or experience terror.
+                   "End of List        "   //buffer line. Leave here or experience terror.
                    };
 
 
 
 // Create objects
 Bounce debounce[4] = Bounce();       //Debouncing Library
-LiquidCrystal_I2C lcd(0x27, 20, 4);  //I2C 4 Line LCD Screen
+
+//NOTE: The screen address can be 0x27 or 0x3F. If your screen only shows black lines instead of your display, change the object call here.
+LiquidCrystal_I2C lcd(0x27, 20, 4);  //I2C 4 Row 20 Col LCD Screen at 0x27
+//LiquidCrystal_I2C lcd(0x3F, 20, 4);  //I2C 4 Row 20 Col LCD Screen at 0x3F
+
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(16, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800); //Neopixel strip. (Number of LEDs, Pin, Pixels are wired for GRB bitstream and 800 KHz bitstream )
 
 int delayval = 500;         // delay for half a second
