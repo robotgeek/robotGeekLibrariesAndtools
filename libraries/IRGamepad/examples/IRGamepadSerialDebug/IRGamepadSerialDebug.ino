@@ -12,7 +12,7 @@ void setup()
   my_gamepad.enable();
 }
 
-void loop() 
+void loop()
 {
   if ( my_gamepad.update_button_states() )
   {
