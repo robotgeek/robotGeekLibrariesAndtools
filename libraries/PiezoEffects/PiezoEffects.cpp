@@ -9,6 +9,17 @@ PiezoEffects::PiezoEffects( int pinNumber )
   pinMode( _speakerPin, OUTPUT );
 }
 
+PiezoEffects::PiezoEffects( int pinNumber, int ledA, int ledB )
+{
+  _speakerPin = pinNumber;
+  pinMode( _speakerPin, OUTPUT );
+  _ledPinA = ledA;
+  _ledPinB = ledB;
+  pinMode( _ledPinA, OUTPUT );
+  pinMode( _ledPinB, OUTPUT );
+  _flashLEDs = true;
+}
+
 void PiezoEffects::play( int soundID )
 {
   switch( soundID )
@@ -258,8 +269,18 @@ void PiezoEffects::_tone( float noteFrequency, long noteDuration, int silentDura
   // Play the note for the calculated loopTime.
   for (x = 0; x < loopTime; x++)
   {
+    if ( _flashLEDs )
+    {
+      digitalWrite(_ledPinA, HIGH);
+      digitalWrite(_ledPinB, HIGH);
+    }
     digitalWrite(_speakerPin, HIGH);
     delayMicroseconds(microsecondsPerWave);
+    if ( _flashLEDs )
+    {
+      digitalWrite(_ledPinA, LOW);
+      digitalWrite(_ledPinB, LOW);
+    }
     digitalWrite(_speakerPin, LOW);
     delayMicroseconds(microsecondsPerWave);
   }
@@ -293,4 +314,16 @@ void PiezoEffects::bendTones( float initFrequency, float finalFrequency, float p
       _tone(i, noteDuration, silentDuration);
     }
   }
+}
+
+void PiezoEffects::setLEDPins( int pinA, int pinB )
+{
+  _ledPinA = pinA;
+  _ledPinB = pinB;
+}
+
+bool PiezoEffects::toggleFlashingLEDs()
+{
+  _flashLEDs = !_flashLEDs;
+  return _flashLEDs;
 }

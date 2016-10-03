@@ -37,10 +37,17 @@ class PiezoEffects
 {
 	public:
 		PiezoEffects( int pinNumber );
+		PiezoEffects( int pinNumber, int ledA, int ledB );
 		void play( int soundID );
+
+		bool toggleFlashingLEDs();
+		void setLEDPins( int pinA, int pinB );
 
 	private:
 		int _speakerPin;
+		bool _flashLEDs;
+		int _ledPinA = -1;
+		int _ledPinB = -1;
 		void _tone( float noteFrequency, long noteDuration, int silentDuration );
 		void bendTones( float initFrequency, float finalFrequency, float prop, long noteDuration, int silentDuration );
 };
