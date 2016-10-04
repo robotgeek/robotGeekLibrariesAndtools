@@ -257,11 +257,6 @@ void PiezoEffects::play( int soundID )
 
 void PiezoEffects::_tone( float noteFrequency, long noteDuration, int silentDuration )
 {
-  if( silentDuration == 0 )
-  {
-    silentDuration = 1;
-  }
-
   int x;
   float microsecondsPerWave = 1000000 / noteFrequency;
   float millisecondsPerCycle = 1000 / (microsecondsPerWave * 2);
@@ -285,8 +280,11 @@ void PiezoEffects::_tone( float noteFrequency, long noteDuration, int silentDura
     delayMicroseconds(microsecondsPerWave);
   }
 
-  delay(noteDuration); //milliseconds to microseconds
-  delay(silentDuration);
+  if ( silentDuration )
+  {
+    delay(noteDuration); //milliseconds to microseconds
+    delay(silentDuration);
+  }
 }
 
 void PiezoEffects::bendTones( float initFrequency, float finalFrequency, float prop, long noteDuration, int silentDuration )
