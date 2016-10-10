@@ -20,11 +20,9 @@
 #include "Arduino.h"
 #include "RFIDuino.h"
 
-
 //initialize the RFIDuino object and set the pins correctlly based on hardware version
 RFIDuino::RFIDuino(float version)
 {
-
   //original RFIDuino (4-pin antenna, no printed version number)
   if (version == 1.1)
   {
@@ -52,11 +50,10 @@ RFIDuino::RFIDuino(float version)
     shd = 7;
     mod = 6;
     rdyClk = 2;
-
   }
   else
   {
-
+    while(1); //TODO: prevent this from happening
   }
 
   //set pin modes on RFID pins
@@ -70,23 +67,15 @@ RFIDuino::RFIDuino(float version)
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
 
-
   //set user outputs to LOW
   digitalWrite(buzzer, LOW);
   digitalWrite(led1, LOW);
   digitalWrite(led2, LOW);
 
-
   //set shd and MOD low to prepare for reading
   digitalWrite(shd, LOW);
   digitalWrite(mod, LOW);
-
-
-
-
 }
-
-
 
 //Manchester decode. Supply the function an array to store the tags ID in
 bool RFIDuino::decodeTag(unsigned char *buf)
@@ -107,15 +96,20 @@ bool RFIDuino::decodeTag(unsigned char *buf)
     {
 
       if(timeCount >= TIMEOUT) //if we pass TIMEOUT milliseconds, break out of the loop
+      {
         break;
+      }
       else
+      {
         timeCount++;
+      }
     }
 
     if (timeCount >= 600)
+    {
       return false;
-    else
-      timeCount = 0;
+    }
+    timeCount = 0;
 
     delayMicroseconds(DELAYVAL);
     if(digitalRead(demodOut))
@@ -131,7 +125,9 @@ bool RFIDuino::decodeTag(unsigned char *buf)
             break;
           }
           else
+          {
             timeCount++;
+          }
         }
 
         if(timeOutFlag)
@@ -142,7 +138,9 @@ bool RFIDuino::decodeTag(unsigned char *buf)
         {
           delayMicroseconds(DELAYVAL);
           if( 0 == digitalRead(demodOut) )
+          {
             break;
+          }
         }
       }//end for loop
 
@@ -180,13 +178,18 @@ bool RFIDuino::decodeTag(unsigned char *buf)
         {
           row_parity = 0;
           j = row >> 1;
+
           for(col = 0, row_parity = 0; col < 5; col++)
           {
             delayMicroseconds(DELAYVAL);
             if(digitalRead(demodOut))
+            {
               dat = 1;
+            }
             else
+            {
               dat = 0;
+            }
 
             if(col < 4 && row < 10)
             {
@@ -205,11 +208,14 @@ bool RFIDuino::decodeTag(unsigned char *buf)
                 break;
               }
               else
+              {
                 timeCount++;
-
+              }
             }
             if(timeOutFlag)
+            {
               break;
+            }
           }
 
           if(row < 10)
@@ -222,7 +228,6 @@ bool RFIDuino::decodeTag(unsigned char *buf)
           }
         }
 
-
         if( timeOutFlag || (col_parity[0] & 0x01) || (col_parity[1] & 0x01) || (col_parity[2] & 0x01) || (col_parity[3] & 0x01) ) //Column parity
         {
           timeOutFlag = 0;
@@ -232,12 +237,14 @@ bool RFIDuino::decodeTag(unsigned char *buf)
         {
           return true;
         }
-      }//end if(i==8)
-      return false;
-    }//end if(digitalRead(demodOut))
-  }
-};
 
+      }//end if(i==8)
+
+      return false;
+
+    }//if(digitalRead(demodOut))
+  } //while(1)
+};
 
 //use the tone() function to play an 'error' sound, a single tone repeated 3 times
 void RFIDuino::errorSound()
@@ -259,12 +266,9 @@ void RFIDuino::errorSound()
 
 };
 
-
-
 //use the tone() function to play an 'success' sound, 3 ascending tones
 void RFIDuino::successSound()
 {
-
   tone(buzzer, 3500, 1000);
   delay(165);
   noTone(buzzer);
@@ -277,60 +281,42 @@ void RFIDuino::successSound()
   delay(165);
   noTone(buzzer);
   delay(165);
-
 };
 
 //function to compare 2 byte arrays. Returns true if the two arrays match, false of any numbers do not match
 bool RFIDuino::compareTagData(byte *tagData1, byte *tagData2)
 {
-
   for(int j = 0; j < 5; j++)
   {
     if (tagData1[j] != tagData2[j])
     {
       return false; //if any of the ID numbers are not the same, return a false
-
     }
-
   }
 
   return true;  //all id numbers have been verified
-
-
 }
-
 
 //function to transfer one byte array to a secondary byte array.
 //source -> tagData
 //destination -> tagDataBuffer
 void RFIDuino::transferToBuffer(byte *tagData, byte *tagDataBuffer)
 {
-
   for(int j = 0; j < 5; j++)
-
   {
     tagDataBuffer[j] = tagData[j];
   }
-
-
-
 }
-
-
 
 bool RFIDuino::scanForTag(byte *tagData)
 {
-
-  //byte tagData[5];            //Holds the ID numbers from the tag
   static byte tagDataBuffer[5];      //A Buffer for verifying the tag data. 'static' so that the data is maintained the next time the loop is called
   static int readCount = 0;          //the number of times a tag has been read. 'static' so that the data is maintained the next time the loop is called
   boolean verifyRead = false; //true when a tag's ID matches a previous read, false otherwise
   boolean tagCheck = false;   //true when a tag has been read, false otherwise
 
-
-
   tagCheck = decodeTag(tagData); //run the decodetag to check for the tag
-  if (tagCheck == true) //if a 'true is' returned from the decodetag function, a tag was succesffuly scanned
+  if (tagCheck == true) //if 'true' is returned from the decodetag function, a tag was succesfully scanned
   {
     readCount++;      //increase count since we've seen a tag
 
@@ -338,7 +324,6 @@ bool RFIDuino::scanForTag(byte *tagData)
     {
       transferToBuffer(tagData, tagDataBuffer);  //place the data from the current tag read into the buffer for the next read
     }
-
     else if(readCount == 2) //if we see a tag a second time, proceed
     {
       verifyRead = compareTagData(tagData, tagDataBuffer); //run the checkBuffer function to compare the data in the buffer (the last read) with the data from the current read
@@ -346,20 +331,12 @@ bool RFIDuino::scanForTag(byte *tagData)
       if (verifyRead == true) //if a 'true' is returned by compareTagData, the current read matches the last read
       {
         readCount = 0; //because a tag has been succesfully verified, reset the readCount to '0' for the next tag
-        return(true);
+        return true;
       }
-
-
     }
   }
-
   else
   {
-    return(false);
+    return false;
   }
-
 }
-
-
-
-

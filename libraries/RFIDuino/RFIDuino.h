@@ -64,11 +64,4 @@ class RFIDuino
 
 };
 
-
-
-
 #endif
-
-
-
-
