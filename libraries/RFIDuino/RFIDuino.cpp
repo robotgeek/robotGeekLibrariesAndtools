@@ -345,10 +345,11 @@ bool RFIDuino::scanForTag(byte *tagData)
 
       if (verifyRead == true) //if a 'true' is returned by compareTagData, the current read matches the last read
       {
+        readCount = 0; //because a tag has been succesfully verified, reset the readCount to '0' for the next tag
         return(true);
       }
 
-      readCount = 0; //because a tag has been succesfully verified, reset the readCount to '0' for the next tag
+
     }
   }
 
