@@ -7,6 +7,7 @@ enum SoundIDs
 {
 	soundUp,
 	soundDown,
+	soundOneBeep,
 	soundWhistle,
 	soundLaugh,
 	soundOhh,

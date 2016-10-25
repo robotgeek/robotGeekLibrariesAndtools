@@ -44,6 +44,9 @@ void PiezoEffects::play( int soundID )
     _tone( note_D7, 50, 0 );
     _tone( note_C7, 50, 0 );
     break;
+  case soundOneBeep:
+    _tone( note_F7, 50, 0 );
+    break;
   case soundBeeps:
     _tone( note_A7, 100, 0 );
     _tone( note_G7, 100, 0 );
