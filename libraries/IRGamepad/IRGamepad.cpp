@@ -162,11 +162,11 @@ unsigned long IR_Gamepad::getCurrentHash()
 {
   unsigned long current_hash = 0;
 
-  if (_IRrecv->GetResults(&_IRhashdecoder))
+  if (_IRrecv->getResults())
   {
-    _IRhashdecoder.decode();
-    current_hash = _IRhashdecoder.hash;
-    _IRrecv->resume();
+    _IRdecoder.decode();
+    current_hash = _IRdecoder.value;
+    _IRrecv->enableIRIn();
   }
 
   _lastHash = current_hash; //Store for later use

@@ -8,7 +8,7 @@ IR_Gamepad my_gamepad(IR_INPUT_PIN, useModeB);
 void setup()
 {
   Serial.begin(38400);
-  while(!Serial);
+  while (!Serial);
   my_gamepad.enable();
 }
 

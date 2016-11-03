@@ -1,7 +1,12 @@
 #ifndef IR_GAMEPAD
 #define IR_GAMEPAD
 
-#include <IRLib.h>
+//Create a decoder that handles the hash decoding which will return a 32 bit hash.
+#include <IRLibDecodeBase.h>
+#include <IRLib_HashRaw.h>  //Must be last protocol
+#include <IRLibCombo.h>     // After all protocols, include this
+#include <IRLibRecv.h>  // Include a receiver either this or IRLibRecvPCI or IRLibRecvLoop
+
 #include <Arduino.h>
 
 struct GamepadButtons
@@ -95,7 +100,7 @@ class IR_Gamepad
   protected:
     int _pinID;
     IRrecv * _IRrecv;
-    IRdecodeHash _IRhashdecoder;
+    IRdecode _IRdecoder;
     unsigned long _lastHash;
     bool _contollerModeB;
     GamepadButtons _buttonStates;
